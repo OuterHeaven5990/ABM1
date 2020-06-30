@@ -1,5 +1,6 @@
 package com.example.abm1;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        /** Home Logo on click action **/
+
+        ImageView img = findViewById(R.id.homeLogo);
+        img.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {startTermActivity();}
+                });
     }
 
     @Override
@@ -52,5 +62,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void startTermActivity() {
+        Intent intent = new Intent(this, TermActivity.class);
+        startActivity(intent);
     }
 }

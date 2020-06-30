@@ -24,7 +24,7 @@
         android:id="@+id/term_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
+
         android:layout_margin="0dp"
         android:maxLines="2"
         android:ellipsize="end"
