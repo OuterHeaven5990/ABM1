@@ -18,42 +18,44 @@ import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
-    private ArrayList<TermEntity> terms;
-    private int selectedPos = RecyclerView.NO_POSITION;
+    private ArrayList<TermEntity> mTerms;
+    private int position;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public ViewHolder(View v) {
-            super(v);
-            textView = (TextView) v.findViewById(R.id.term_text);
-        }
-    }
+
 
     public TermAdapter(ArrayList<TermEntity> terms) {
-        this.terms = terms;
+        mTerms = terms;
     }
 
-    // Create new views (invoked by the layout manager)
+
     @Override
     public TermAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.term_list_item, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        ViewHolder viewholder = new ViewHolder(view);
+        return viewholder;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final String term_title = terms.get(position).getText();
-        holder.textView.setText(term_title);
+        final String term_text = mTerms.get(position).getText();
+        holder.termTextView.setText(term_text);
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+
     @Override
     public int getItemCount() {
-        return terms.size();
+        return mTerms.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView termTextView;
+        public ViewHolder(View view) {
+            super(view);
+            termTextView = (TextView) view.findViewById(R.id.term_text);
+        }
     }
 
 }
