@@ -19,7 +19,7 @@
         android:id="@+id/fragment_addterm"
         android:name="com.example.abm1.TermFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_addterm">
+        tools:layout="@layout/fragment_term">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
