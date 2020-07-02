@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         /** Home Logo on click action **/
 
-        ImageView img = findViewById(R.id.homeLogo);
+        ImageView img = findViewById(R.id.termImage);
         img.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {startTermActivity();}
