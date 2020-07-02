@@ -24,15 +24,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         /** Home Logo on click action **/
 
         ImageView img = findViewById(R.id.termImage);
@@ -41,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {startTermActivity();}
                 });
     }
+    /********************************************************************************************/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /** Navigate to the Term activity ***********************************************************/
     public void startTermActivity() {
         Intent intent = new Intent(this, TermActivity.class);
         startActivity(intent);
     }
+    /********************************************************************************************/
 }
