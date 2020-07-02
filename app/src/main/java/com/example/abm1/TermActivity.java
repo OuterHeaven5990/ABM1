@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +26,10 @@ public class TermActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term);
+        setContentView(R.layout.activity_term);;
+        getSupportActionBar().setTitle("Term List");
+
+
         ///Set up recycler view/////////////////////////////////////////////////////////////////////
         RecyclerView termRV = (RecyclerView) findViewById(R.id.term_recycler_view);
         RecyclerView.LayoutManager termLM;
