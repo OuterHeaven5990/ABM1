@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName="terms")
+
 public class TermEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -15,25 +16,32 @@ public class TermEntity {
     private Date endDate;
     private String termTitle;
 
+   //Constructors//////////////////////////////////////////////////////////////////////////////
+
+
+    public TermEntity(int id, Date startDate, Date endDate, String termTitle) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.termTitle = termTitle;
+    }
+
+
+    @Ignore
+    public TermEntity(Date startDate, Date endDate, String termTitle) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.termTitle = termTitle;
+    }
+
     @Ignore
     public TermEntity() {
     }
 
-    public TermEntity(int id, Date sdate, Date eDate, String termtitle) {
-        this.id = id;
-        this.startDate = sdate;
-        this.endDate = eDate;
-        this.termTitle = termtitle;
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Getters and setters//////////////////////////////////////////////////////////////////////////////
 
-    @Ignore
-    public TermEntity(Date sdate, Date edate, String termtitle) {
-        this.startDate = sdate;
-        this.endDate = edate;
-        this.termTitle = termtitle;
-    }
 
-   //Getters and Setters///////////////////////////////////////////////////////////////////////////
     public int getId() {
         return id;
     }
@@ -46,20 +54,24 @@ public class TermEntity {
         return startDate;
     }
 
-    public void setStartDate(Date date) {
-        this.startDate = date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEndDate(Date date) {return  endDate;}
+    public Date getEndDate() {
+        return endDate;
+    }
 
-    public void setEndDate(Date date) {this.endDate = date;};
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     public String getTermTitle() {
         return termTitle;
     }
 
-    public void setTermTitle(String text) {
-        this.termTitle = text;
+    public void setTermTitle(String termTitle) {
+        this.termTitle = termTitle;
     }
 
     @Override
