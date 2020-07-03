@@ -39,7 +39,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final String term_text = mTerms.get(position).getText();
+        final String term_text = mTerms.get(position).getTermTitle();
         holder.termTextView.setText(term_text);
 
     }

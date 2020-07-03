@@ -18,12 +18,14 @@ public class SampleData {
         cal.add(Calendar.MILLISECOND,diff);
         return cal.getTime();
     }
-
+        //Sample data for terms/////////////////////////////////////////////////////////////////////
         public static List<TermEntity> getTerms() {
         List<TermEntity> terms = new ArrayList<>();
-        terms.add(new TermEntity(1,getDate(0),SAMPLE_TEXT_1));
-        terms.add(new TermEntity(2,getDate(-1),SAMPLE_TEXT_2));
-        terms.add(new TermEntity(3,getDate(-2),SAMPLE_TEXT_3));
+        terms.add(new TermEntity(1,getDate(0),getDate(-1), SAMPLE_TEXT_1));
+        terms.add(new TermEntity(2,getDate(-2),getDate(-3), SAMPLE_TEXT_2));
+        terms.add(new TermEntity(3,getDate(-4),getDate(-5), SAMPLE_TEXT_3));
         return terms;
         }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
 }
