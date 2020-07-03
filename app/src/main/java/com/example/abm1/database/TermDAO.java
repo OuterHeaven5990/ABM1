@@ -28,4 +28,7 @@ public interface TermDAO {
 
     @Query("SELECT*FROM terms")
     LiveData<List<TermEntity>> getAllTerms();
+
+    @Query("SELECT COUNT(*) FROM terms")
+    int getCount();
 }

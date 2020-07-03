@@ -24,9 +24,9 @@ public class SampleData {
 
 
 
-        terms.add(new TermEntity(1,getDate(0), getDate(-1), SAMPLE_TEXT_1));
-        terms.add(new TermEntity(2,getDate(-2), getDate(-3), SAMPLE_TEXT_2));
-        terms.add(new TermEntity(3,getDate(-4), getDate(-5), SAMPLE_TEXT_3));
+        terms.add(new TermEntity(getDate(0), getDate(-1), SAMPLE_TEXT_1));
+        terms.add(new TermEntity(getDate(-2), getDate(-3), SAMPLE_TEXT_2));
+        terms.add(new TermEntity(getDate(-4), getDate(-5), SAMPLE_TEXT_3));
         return terms;
         }
 
