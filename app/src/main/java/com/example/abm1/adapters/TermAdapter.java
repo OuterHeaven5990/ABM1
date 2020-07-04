@@ -10,10 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.abm1.EditTermActivity;
 import com.example.abm1.R;
 import com.example.abm1.models.TermEntity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
@@ -42,7 +45,21 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final String term_text = mTerms.get(position).getTermTitle();
+        final Integer term_id = mTerms.get(position).getId();
+        final Date term_startDate = mTerms.get(position).getStartDate();
+
         holder.termTextView.setText(term_text);
+
+
+
+        holder.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, EditTermActivity.class);
+                intent.putExtra("Term_ID", term_id);
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 
@@ -54,9 +71,11 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView termTextView;
+        private FloatingActionButton fab;
         public ViewHolder(View view) {
             super(view);
             termTextView = (TextView) view.findViewById(R.id.term_text);
+            fab = (FloatingActionButton) view.findViewById(R.id.fab);
         }
     }
 

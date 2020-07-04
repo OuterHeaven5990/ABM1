@@ -47,6 +47,10 @@ public class AppRepo {
         });
     }
 
+    public TermEntity getTermById(int termId) {
+        return myDb.termDAO().getTermById(termId);
+    }
+
     private LiveData<List<TermEntity>> getAllTerms() {
         return myDb.termDAO().getAllTerms();
     }

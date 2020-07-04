@@ -1,8 +1,10 @@
 package com.example.abm1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +20,7 @@ import com.example.abm1.database.AppDatabase;
 import com.example.abm1.database.TermDAO;
 import com.example.abm1.models.TermEntity;
 import com.example.abm1.utilities.SampleData;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class TermActivity extends AppCompatActivity {
     TermAdapter termAdapter;
     private TermViewModel termViewModel;
     private RecyclerView termRV;
+    private FloatingActionButton fab;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -36,16 +40,19 @@ public class TermActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
-
-        termRV = (RecyclerView) findViewById(R.id.term_recycler_view);
         getSupportActionBar().setTitle("Term List");
-
+        termRV = (RecyclerView) findViewById(R.id.term_recycler_view);
         ///Set up recycler view/////////////////////////////////////////////////////////////////////
         RecyclerView.LayoutManager termLM;
         termRV.setHasFixedSize(true);
         termLM = new LinearLayoutManager(this);
         termRV.setLayoutManager(termLM);
         initViewModel();
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {editButtonClick();}
+        });
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -100,6 +107,12 @@ public class TermActivity extends AppCompatActivity {
     //Clear Terms list/////////////////////////////////////////////////////////////////////////////
     private void deleteAllTerms() {
         termViewModel.deleteAllTerms();
+    }
+
+    //Add Button Click//////////////////////////////////////////////////////////////////////////
+    private void editButtonClick() {
+        Intent intent = new Intent(this, CreateTermActivity.class);
+        startActivity(intent);
     }
 
 }
