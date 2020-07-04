@@ -6,10 +6,16 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.abm1.ViewModels.TermViewModel;
 import com.example.abm1.adapters.TermAdapter;
+import com.example.abm1.database.AppDatabase;
+import com.example.abm1.database.TermDAO;
 import com.example.abm1.models.TermEntity;
 import com.example.abm1.utilities.SampleData;
 
@@ -21,33 +27,30 @@ public class TermActivity extends AppCompatActivity {
     //Declare variables needed globally////////////////////////////////////////////////////////////
     ArrayList<TermEntity> terms = new ArrayList<>();
     TermAdapter termAdapter;
+    private TermViewModel termViewModel;
+    private RecyclerView termRV;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term);;
+        setContentView(R.layout.activity_term);
+
+        termRV = (RecyclerView) findViewById(R.id.term_recycler_view);
         getSupportActionBar().setTitle("Term List");
 
-
         ///Set up recycler view/////////////////////////////////////////////////////////////////////
-        RecyclerView termRV = (RecyclerView) findViewById(R.id.term_recycler_view);
         RecyclerView.LayoutManager termLM;
         termRV.setHasFixedSize(true);
         termLM = new LinearLayoutManager(this);
         termRV.setLayoutManager(termLM);
-        ///Link adapter/////////////////////////////////////////////////////////////////////////////
-        termAdapter = new TermAdapter(terms);
-         termRV.setAdapter(termAdapter);
+        initViewModel();
     }
 
-    ///Generate Sample Data method ////////////////////////////////////////////////////////////////
-    public void generateSampleData() {
-        terms.addAll(SampleData.getTerms());
-        termAdapter.notifyDataSetChanged();
-    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ////Get Main Menu for sub activities//////////////////////////////////////////////////////////////
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -55,17 +58,48 @@ public class TermActivity extends AppCompatActivity {
         return true;
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //Handle menu selections//////////////////////////////////////////////////////////////////////
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_SampleData) {
-                generateSampleData();
-                 return true;
-        }
+        if (id == R.id.action_SampleData) { generateSampleData(); return true; }
+        else if (id == R.id.action_delete_all_terms) {deleteAllTerms(); return  true;}
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    ///Create link view model/////////////////////////////////////////////////////////////////////////
+    private void initViewModel() {
+
+        final Observer<List<TermEntity>> termsObserver = new Observer<List<TermEntity>>() {
+            @Override
+            public void onChanged(List<TermEntity> termEntities) {
+                terms.clear();
+                terms.addAll(termEntities);
+
+                if (termAdapter == null) {
+                    termAdapter = new TermAdapter(terms, TermActivity.this);
+                    termRV.setAdapter(termAdapter);
+                } else {termAdapter.notifyDataSetChanged();}
+            }
+        };
+
+        termViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
+        termViewModel.terms.observe(this,termsObserver);
+    }
+
+    ///Generate Sample Data method ////////////////////////////////////////////////////////////////
+    private void generateSampleData() {
+        termViewModel.generateSampleData();
+    }
+
+    //Clear Terms list/////////////////////////////////////////////////////////////////////////////
+    private void deleteAllTerms() {
+        termViewModel.deleteAllTerms();
     }
 
 }

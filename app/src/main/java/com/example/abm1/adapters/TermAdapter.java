@@ -20,11 +20,13 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     private ArrayList<TermEntity> mTerms;
     private int position;
+    private final Context mContext;
 
 
 
-    public TermAdapter(ArrayList<TermEntity> terms) {
+    public TermAdapter(ArrayList<TermEntity> terms, Context context) {
         mTerms = terms;
+        this.mContext = context;
     }
 
 
