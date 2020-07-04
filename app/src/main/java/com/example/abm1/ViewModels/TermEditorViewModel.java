@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.TermEntity;
 
+import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -32,5 +33,17 @@ public class TermEditorViewModel extends AndroidViewModel {
                 liveTermEntity.postValue(term);
             }
         });
+    }
+
+    public void saveTerm(String termtitle, Date startdate, Date enddate) {
+        TermEntity term = liveTermEntity.getValue();
+        if (term == null) { }
+
+        else {
+            term.setTermTitle(termtitle);
+            term.setStartDate(startdate);
+            term.setEndDate(enddate);
+        }
+        repository.insertTerm(term);
     }
 }

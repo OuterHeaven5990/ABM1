@@ -54,4 +54,13 @@ public class AppRepo {
     private LiveData<List<TermEntity>> getAllTerms() {
         return myDb.termDAO().getAllTerms();
     }
+
+    public void insertTerm(final TermEntity term) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.termDAO().insertTerm(term);
+            }
+        });
+    }
 }
