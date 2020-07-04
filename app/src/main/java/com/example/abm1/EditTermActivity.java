@@ -1,5 +1,6 @@
 package com.example.abm1;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,9 +18,16 @@ import com.example.abm1.models.TermEntity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class EditTermActivity  extends AppCompatActivity {
 
     private TermEditorViewModel termViewModel;
@@ -28,6 +37,8 @@ public class EditTermActivity  extends AppCompatActivity {
     private Button saveButton;
     private Date sDate;
     private Date eDate;
+
+
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
@@ -64,11 +75,16 @@ public class EditTermActivity  extends AppCompatActivity {
         termViewModel.liveTermEntity.observe(this, new Observer<TermEntity>() {
             @Override
             public void onChanged(TermEntity termEntity)  {
+                String sDate = termEntity.getStartDate().toString();
+                LocalDate tempStartDate = ZonedDateTime.parse(sDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
+                String startDate = tempStartDate.getDayOfMonth() + "/" + tempStartDate.getMonthValue() + "/" + tempStartDate.getYear();
+                String eDate = termEntity.getEndDate().toString();
+                LocalDate tempEndDate = ZonedDateTime.parse(eDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
+                String endDate = tempEndDate.getDayOfMonth() + "/" + tempEndDate.getMonthValue() + "/" + tempEndDate.getYear();
 
+                startDateText.setText(startDate);
                 termTitle.setText(termEntity.getTermTitle());
-                startDateText.setText(termEntity.getStartDate().toString());
-                endDateText.setText(termEntity.getEndDate().toString());
-
+                endDateText.setText(endDate);
             }
         });
         Bundle extras = getIntent().getExtras();
@@ -86,5 +102,6 @@ public class EditTermActivity  extends AppCompatActivity {
 
         finish();
     }
+
 
 }
