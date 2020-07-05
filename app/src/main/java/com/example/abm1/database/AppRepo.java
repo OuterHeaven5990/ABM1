@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 import com.example.abm1.utilities.SampleData;
 
@@ -16,6 +17,7 @@ public class AppRepo {
 
     private static  AppRepo instance;
     public LiveData<List<TermEntity>> repoTerms;
+    public LiveData<List<CourseEntity>> repoCourses;
     private AppDatabase myDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -74,5 +76,7 @@ public class AppRepo {
         });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    //Course Functions///////////////////////////////////////////////////////////////////////////////
+
 
 }

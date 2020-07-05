@@ -1,9 +1,12 @@
 package com.example.abm1;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -37,7 +40,14 @@ public class ViewTermActivity extends AppCompatActivity {
          termStartDateText = (TextView) findViewById(R.id.termStartDateText);
          termEndDateText = (TextView) findViewById(R.id.termEndDateText);
         initViewModel();
+
+        ImageView img = findViewById(R.id.courseLogo);
+        img.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {startCourseActivity();}
+        });
     }
+
 
     private void initViewModel()  {
         termViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
@@ -93,5 +103,10 @@ public class ViewTermActivity extends AppCompatActivity {
         return  true;
     }
 
+
+    public void startCourseActivity() {
+        Intent intent = new Intent(this, CourseActivity.class);
+        startActivity(intent);
+    }
 
 }

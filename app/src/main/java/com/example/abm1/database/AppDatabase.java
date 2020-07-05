@@ -6,10 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 
-@Database(entities = {TermEntity.class}, version = 1)
+@Database(entities = {TermEntity.class, CourseEntity.class}, version = 2)
+
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -18,6 +22,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static final Object LOCK = new Object();
 
     public abstract  TermDAO termDAO();
+    public abstract CourseDAO courseDAO();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
@@ -25,7 +30,8 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (LOCK) {
                 if (instance == null) {
 
-                    instance = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,DATABASE_NAME).build();
+                    instance = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,DATABASE_NAME).fallbackToDestructiveMigration() .build();
+
                 }
             }
         }
@@ -33,4 +39,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
         return instance;
     }
+
+
+
 }

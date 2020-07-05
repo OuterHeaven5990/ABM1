@@ -1,8 +1,15 @@
 package com.example.abm1.models;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity(tableName="courses")
+
 public class CourseEntity {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String courseTitle;
     private Date  endDate;
@@ -19,6 +26,7 @@ public class CourseEntity {
         this.termId = termId;
     }
 
+    @Ignore
     public CourseEntity(String courseTitle, Date endDate, Date startDate, String status, int termId) {
         this.courseTitle = courseTitle;
         this.endDate = endDate;

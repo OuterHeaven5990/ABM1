@@ -32,6 +32,10 @@
             android:name=".ViewTermActivity"
             />
 
+        <activity
+            android:name=".CourseActivity"
+            />
+
     </application>
 
 </manifest>
