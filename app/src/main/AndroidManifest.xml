@@ -28,6 +28,10 @@
             android:name=".EditTermActivity"
             />
 
+        <activity
+            android:name=".ViewTermActivity"
+            />
+
     </application>
 
 </manifest>

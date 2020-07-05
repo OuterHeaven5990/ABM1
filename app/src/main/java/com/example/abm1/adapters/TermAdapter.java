@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.EditTermActivity;
 import com.example.abm1.R;
+import com.example.abm1.ViewTermActivity;
 import com.example.abm1.models.TermEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,8 +47,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final String term_text = mTerms.get(position).getTermTitle();
         final Integer term_id = mTerms.get(position).getId();
-        final Date term_startDate = mTerms.get(position).getStartDate();
-
         holder.termTextView.setText(term_text);
 
 
@@ -61,6 +60,14 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
             }
         });
 
+        holder.termTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ViewTermActivity.class);
+                intent.putExtra("TERM_ID", term_id );
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 
