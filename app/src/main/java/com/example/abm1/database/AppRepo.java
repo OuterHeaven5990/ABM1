@@ -31,6 +31,7 @@ public class AppRepo {
         repoTerms = getAllTerms();
     }
 
+    //Term Functions////////////////////////////////////////////////////////////////////////////////
     public void generateSampleData() {
         executor.execute(new Runnable(){
             @Override
@@ -63,4 +64,14 @@ public class AppRepo {
             }
         });
     }
+
+    public void deleteTerm(final TermEntity term) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.termDAO().deleteTerm(term);
+            }
+        });
+    }
+
 }

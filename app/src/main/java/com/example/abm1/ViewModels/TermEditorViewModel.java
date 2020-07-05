@@ -20,10 +20,8 @@ public class TermEditorViewModel extends AndroidViewModel {
     private AppRepo repository;
     private Executor executor = Executors.newSingleThreadExecutor();
 
-    public TermEditorViewModel(@NonNull Application application) {
-        super(application);
-        repository = AppRepo.getInstance(getApplication());
-
+    public void deleteTerm() {
+        repository.deleteTerm(liveTermEntity.getValue());
     }
 
     public void getData(final int termId) {
@@ -54,4 +52,11 @@ public class TermEditorViewModel extends AndroidViewModel {
         }
         repository.insertTerm(term);
     }
+
+    public TermEditorViewModel(@NonNull Application application) {
+        super(application);
+        repository = AppRepo.getInstance(getApplication());
+
+    }
+
 }

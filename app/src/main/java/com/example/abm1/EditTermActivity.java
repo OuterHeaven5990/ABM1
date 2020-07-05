@@ -3,6 +3,9 @@ package com.example.abm1;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -32,7 +35,7 @@ import java.util.GregorianCalendar;
 
 
 public class EditTermActivity  extends AppCompatActivity{
-
+    ///Private variables needed to activity////////////////////////////////////////////////////////
     private TermEditorViewModel termViewModel;
     private TextView termTitle;
     private Button startDateButton,endDateButton,saveButton;
@@ -42,9 +45,7 @@ public class EditTermActivity  extends AppCompatActivity{
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////
     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
@@ -113,6 +114,27 @@ public class EditTermActivity  extends AppCompatActivity{
 
 }
 
+//Load Menu into activity//////////////////////////////////////////////////////////////////////////
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!newTerm) {
+            getMenuInflater().inflate(R.menu.edit_menu, menu);
+        }
+        return true;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Options selected logic///////////////////////////////////////////////////////////////////////////
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_delete_term) {
+            termViewModel.deleteTerm();
+            finish();
+        }
+        return  true;
+    }
+
+
 
 
     private void initViewModel()  {
@@ -123,7 +145,7 @@ public class EditTermActivity  extends AppCompatActivity{
             public void onChanged(TermEntity termEntity)  {
                 if(termEntity != null) {
 
-
+                    //Date Converter////////////////////////////////////////////////////////////////
                     String sDate = termEntity.getStartDate().toString();
                     String eDate = termEntity.getEndDate().toString();
                     LocalDate tempStartDate = ZonedDateTime.parse(sDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
@@ -136,7 +158,7 @@ public class EditTermActivity  extends AppCompatActivity{
                     int emonth = tempEndDate.getMonthValue();
                     int eyear = tempEndDate.getYear();
                     String enddate = emonth + "/" + eday + "/" + eyear;
-
+                ////////////////////////////////////////////////////////////////////////////////////
                         termTitle.setText(termEntity.getTermTitle());
                         startDateButton.setText(startdate);
                         endDateButton.setText(enddate);
@@ -169,8 +191,6 @@ public class EditTermActivity  extends AppCompatActivity{
         termViewModel.saveTerm(termTitle.getText().toString(),startdate,enddate);
         finish();
     }
-
-
 
 
 }

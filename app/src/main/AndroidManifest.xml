@@ -25,10 +25,6 @@
             android:name=".TermActivity"
             />
         <activity
-        android:name=".CreateTermActivity"
-        />
-
-        <activity
             android:name=".EditTermActivity"
             />
 
