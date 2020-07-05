@@ -51,7 +51,7 @@ public class TermActivity extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {editButtonClick();}
+            @Override public void onClick(View view) {addButtonClick();}
         });
     }
 
@@ -110,9 +110,11 @@ public class TermActivity extends AppCompatActivity {
     }
 
     //Add Button Click//////////////////////////////////////////////////////////////////////////
-    private void editButtonClick() {
-        Intent intent = new Intent(this, CreateTermActivity.class);
+    private void addButtonClick() {
+        Intent intent = new Intent(this, EditTermActivity.class);
         startActivity(intent);
     }
+
+
 
 }

@@ -1,9 +1,11 @@
 package com.example.abm1;
 
+import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -23,32 +25,40 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-@RequiresApi(api = Build.VERSION_CODES.O)
-public class EditTermActivity  extends AppCompatActivity {
+
+public class EditTermActivity  extends AppCompatActivity{
 
     private TermEditorViewModel termViewModel;
     private TextView termTitle;
-    private TextView startDateText;
-    private TextView endDateText;
-    private Button saveButton;
-    private Date sDate;
-    private Date eDate;
+    private Button startDateButton,endDateButton,saveButton;
+    private String startDate, endDate;
+    private boolean newTerm;
+    GregorianCalendar calendar = new GregorianCalendar();
+    int year = calendar.get(Calendar.YEAR);
+    int month = calendar.get(Calendar.MONTH);
+    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
     protected void onCreate(Bundle SavedInstanceState) {
         super.onCreate(SavedInstanceState);
         setContentView(R.layout.activity_createterm);
-        getSupportActionBar().setTitle("Edit Term");
 
-        Button save = findViewById(R.id.saveButton);
-        save.setOnClickListener(new View.OnClickListener(){
+        termTitle = (TextView) findViewById(R.id.termTitleText);
+        startDateButton = (Button) findViewById(R.id.startDateButton);
+        endDateButton = (Button) findViewById(R.id.endDateButton);
+        saveButton = (Button) findViewById(R.id.saveButton);
+
+       ///Save Button onClick listener/////////////////////////////////////////////////////////////
+        saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 try {
@@ -59,12 +69,47 @@ public class EditTermActivity  extends AppCompatActivity {
             }
         });
 
-        termTitle = (TextView) findViewById(R.id.termTitleText);
-        startDateText = (TextView) findViewById(R.id.startDateText);
-        endDateText = (TextView) findViewById(R.id.endDateText);
-        saveButton = (Button) findViewById(R.id.saveButton);
-        initViewModel();
+        ///////////////////////////////////////////////////////////////////////////////////////////
 
+        ///StartDate Button listner////////////////////////////////////////////////////////////////
+        startDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                DatePickerDialog dpd = new DatePickerDialog(EditTermActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                                month  = month + 1;
+                                startDate = month + "/" + dayOfMonth + "/" + year;
+                                startDateButton.setText(startDate);
+                            }
+                        },year,month,dayOfMonth);
+
+                dpd.show();
+            }
+        });
+
+        ///End Date Button Listner/////////////////////////////////////////////////////////////////
+        endDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                DatePickerDialog dpd = new DatePickerDialog(EditTermActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+                                month = month + 1;
+                                endDate = month + "/" + dayOfMonth + "/" + year;
+                                endDateButton.setText(endDate);
+                            }
+                        },year,month,dayOfMonth);
+                dpd.show();
+            }
+        });
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        initViewModel();
 
 }
 
@@ -73,35 +118,59 @@ public class EditTermActivity  extends AppCompatActivity {
     private void initViewModel()  {
         termViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
         termViewModel.liveTermEntity.observe(this, new Observer<TermEntity>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(TermEntity termEntity)  {
-                String sDate = termEntity.getStartDate().toString();
-                LocalDate tempStartDate = ZonedDateTime.parse(sDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
-                String startDate = tempStartDate.getDayOfMonth() + "/" + tempStartDate.getMonthValue() + "/" + tempStartDate.getYear();
-                String eDate = termEntity.getEndDate().toString();
-                LocalDate tempEndDate = ZonedDateTime.parse(eDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
-                String endDate = tempEndDate.getDayOfMonth() + "/" + tempEndDate.getMonthValue() + "/" + tempEndDate.getYear();
+                if(termEntity != null) {
 
-                startDateText.setText(startDate);
-                termTitle.setText(termEntity.getTermTitle());
-                endDateText.setText(endDate);
+
+                    String sDate = termEntity.getStartDate().toString();
+                    String eDate = termEntity.getEndDate().toString();
+                    LocalDate tempStartDate = ZonedDateTime.parse(sDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
+                    LocalDate tempEndDate = ZonedDateTime.parse(eDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
+                    int sday = tempStartDate.getDayOfMonth();
+                    int smonth = tempStartDate.getMonthValue();
+                    int syear = tempStartDate.getYear();
+                    String startdate = smonth + "/" + sday + "/" + syear;
+                    int eday = tempEndDate.getDayOfMonth();
+                    int emonth = tempEndDate.getMonthValue();
+                    int eyear = tempEndDate.getYear();
+                    String enddate = emonth + "/" + eday + "/" + eyear;
+
+                        termTitle.setText(termEntity.getTermTitle());
+                        startDateButton.setText(startdate);
+                        endDateButton.setText(enddate);
+                        startDate = startdate;
+                        endDate = enddate;
+
+                }
             }
         });
+
         Bundle extras = getIntent().getExtras();
-        int termId = extras.getInt("Term_ID");
-       termViewModel.getData(termId);
+        if (extras == null) {
+            setTitle("New Term");
+            newTerm = true;
+        }
+
+        else {
+            setTitle("Edit Term");
+            int termId = extras.getInt("Term_ID");
+            termViewModel.getData(termId);
+        }
     }
+
 
     private void onSaveButtonClick() throws ParseException {
-        String temp1 = startDateText.getText().toString();
-        String temp2 = endDateText.getText().toString();
-        sDate = format.parse(temp1);
-        eDate = format.parse(temp2);
-
-        termViewModel.saveTerm(termTitle.getText().toString(),sDate,eDate);
-
+        Date enddate;
+        Date startdate;
+        startdate = format.parse(startDate);
+        enddate = format.parse(endDate);
+        termViewModel.saveTerm(termTitle.getText().toString(),startdate,enddate);
         finish();
     }
+
+
 
 
 }

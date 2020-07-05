@@ -1,6 +1,7 @@
 package com.example.abm1.ViewModels;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -37,10 +38,17 @@ public class TermEditorViewModel extends AndroidViewModel {
 
     public void saveTerm(String termtitle, Date startdate, Date enddate) {
         TermEntity term = liveTermEntity.getValue();
-        if (term == null) { }
+        if (term == null) {
+
+            if(TextUtils.isEmpty(termtitle.trim())) {
+                return;
+            }
+
+            term = new TermEntity(startdate,enddate,termtitle.trim());
+        }
 
         else {
-            term.setTermTitle(termtitle);
+            term.setTermTitle(termtitle.trim());
             term.setStartDate(startdate);
             term.setEndDate(enddate);
         }
