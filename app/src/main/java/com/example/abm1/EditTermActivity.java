@@ -114,28 +114,6 @@ public class EditTermActivity  extends AppCompatActivity{
 
 }
 
-//Load Menu into activity//////////////////////////////////////////////////////////////////////////
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!newTerm) {
-            getMenuInflater().inflate(R.menu.edit_menu, menu);
-        }
-        return true;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Options selected logic///////////////////////////////////////////////////////////////////////////
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_delete_term) {
-            termViewModel.deleteTerm();
-            finish();
-        }
-        return  true;
-    }
-
-
-
 
     private void initViewModel()  {
         termViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
