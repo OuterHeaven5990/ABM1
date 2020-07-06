@@ -1,12 +1,20 @@
 package com.example.abm1.models;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.abm1.CourseActivity;
+
 import java.util.Date;
 
-@Entity(tableName="courses")
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName="courses", foreignKeys = @ForeignKey(entity = TermEntity.class,
+        parentColumns = "id",
+        childColumns = "termId",
+        onDelete = CASCADE))
 
 public class CourseEntity {
     @PrimaryKey(autoGenerate = true)
@@ -17,6 +25,8 @@ public class CourseEntity {
     private String status;
     private int termId;
 
+
+
     public CourseEntity(int id, String courseTitle, Date endDate, Date startDate, String status, int termId) {
         this.id = id;
         this.courseTitle = courseTitle;
@@ -25,6 +35,9 @@ public class CourseEntity {
         this.status = status;
         this.termId = termId;
     }
+
+
+
 
     @Ignore
     public CourseEntity(String courseTitle, Date endDate, Date startDate, String status, int termId) {
