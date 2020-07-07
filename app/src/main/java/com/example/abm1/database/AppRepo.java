@@ -31,6 +31,7 @@ public class AppRepo {
     private AppRepo(Context context) {
         myDb = AppDatabase.getInstance(context);
         repoTerms = getAllTerms();
+        repoCourses = getAllCourses();
     }
 
     //Term Functions////////////////////////////////////////////////////////////////////////////////
@@ -78,5 +79,38 @@ public class AppRepo {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //Course Functions///////////////////////////////////////////////////////////////////////////////
 
+    public void deleteAllCourses() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.courseDAO().deleteAllCourses();
+            }
+        });
+    }
 
+    public CourseEntity getCourseById(int courseId) {
+        return myDb.courseDAO().getCourseById(courseId);
+    }
+
+    private LiveData<List<CourseEntity>> getAllCourses() {
+        return myDb.courseDAO().getAllCourses();
+    }
+
+    public void insertCourse(final CourseEntity course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.courseDAO().insertCourse(course);
+            }
+        });
+    }
+
+    public void deleteCourse(final CourseEntity course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.courseDAO().deleteCourse(course);
+            }
+        });
+    }
 }

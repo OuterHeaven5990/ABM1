@@ -32,6 +32,7 @@ public class ViewTermActivity extends AppCompatActivity {
     private TextView termTitleText,termStartDateText,termEndDateText;
     private AppRepo repository;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +80,10 @@ public class ViewTermActivity extends AppCompatActivity {
             }
         });
 
-        Bundle extras = getIntent().getExtras();
 
-            int termId = extras.getInt("Term_ID");
-            termViewModel.getData(termId);
+        Bundle extras = getIntent().getExtras();
+        int termId = extras.getInt("Term_ID");
+        termViewModel.getData(termId);
     }
 
     //Load Menu into activity//////////////////////////////////////////////////////////////////////////
@@ -105,7 +106,10 @@ public class ViewTermActivity extends AppCompatActivity {
 
 
     public void startCourseActivity() {
+        Bundle extras = getIntent().getExtras();
+        int termId = extras.getInt("Term_ID");
         Intent intent = new Intent(this, CourseActivity.class);
+        intent.putExtra("Term_ID", termId );
         startActivity(intent);
     }
 

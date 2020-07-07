@@ -1,9 +1,13 @@
 package com.example.abm1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +20,7 @@ import com.example.abm1.models.TermEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
 
@@ -38,10 +43,44 @@ public class CourseActivity extends AppCompatActivity {
         courseRV.setHasFixedSize(true);
         termLM = new LinearLayoutManager(this);
         courseRV.setLayoutManager(termLM);
-
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {addButtonClick();}
+        });
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        initViewModel();
     }
 
+    private void initViewModel() {
+
+        final Observer<List<CourseEntity>> courseObserver = new Observer<List<CourseEntity>>() {
+            @Override
+            public void onChanged(List<CourseEntity> courseEntities) {
+                courses.clear();
+                courses.addAll(courseEntities);
+
+                if (courseAdapter == null) {
+                    courseAdapter = new CourseAdapter(courses, CourseActivity.this);
+                    courseRV.setAdapter(courseAdapter);
+                } else {courseAdapter.notifyDataSetChanged();}
+            }
+        };
+
+        courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        courseViewModel.courses.observe(this,courseObserver);
+    }
+
+
+
+    private void addButtonClick() {
+        Bundle extras = getIntent().getExtras();
+        int termId = extras.getInt("Term_ID");
+
+        Intent intent = new Intent(this, EditCourseActivity.class);
+        intent.putExtra("Term_ID", termId);
+        startActivity(intent);
+    }
 }

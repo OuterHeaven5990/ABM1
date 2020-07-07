@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">C196 Term Tracker</string>
     <string name="action_settings">Generate Sample Terms</string>
-    <!-- Strings used for fragments for navigation -->
+    <!-- array for spinner -->
+    <string-array name="course_status">
+        <item>In Progress</item>
+        <item>Completed</item>
+        <item>dropped</item>
+        <item>Plan to Take</item>
+    </string-array>
 
 </resources>
