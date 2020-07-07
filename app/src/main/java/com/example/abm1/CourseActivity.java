@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,17 +16,20 @@ import com.example.abm1.ViewModels.CourseViewModel;
 import com.example.abm1.ViewModels.TermViewModel;
 import com.example.abm1.adapters.CourseAdapter;
 import com.example.abm1.adapters.TermAdapter;
+import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
 
     //Declare variables needed globally////////////////////////////////////////////////////////////
     ArrayList<CourseEntity> courses = new ArrayList<>();
+    ArrayList<CourseEntity> temp = new ArrayList<>();
     CourseAdapter courseAdapter;
     private CourseViewModel courseViewModel;
     private RecyclerView courseRV;
@@ -49,21 +53,29 @@ public class CourseActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {addButtonClick();}
         });
+        Bundle extras = getIntent().getExtras();
+        int termId = extras.getInt("Term_ID");
 
         ///////////////////////////////////////////////////////////////////////////////////////////
-        initViewModel();
+        initViewModel(termId);
+
     }
 
-    private void initViewModel() {
-
-        final Observer<List<CourseEntity>> courseObserver = new Observer<List<CourseEntity>>() {
+    private void initViewModel(final int id) {
+         final Observer<List<CourseEntity>> courseObserver = new Observer<List<CourseEntity>>() {
             @Override
             public void onChanged(List<CourseEntity> courseEntities) {
+
                 courses.clear();
+                temp.clear();
                 courses.addAll(courseEntities);
 
+                for(int i = 0; i < courses.size(); ++i) {
+                    if (courses.get(i).getTermId() == id) {temp.add(courses.get(i));}
+                }
+
                 if (courseAdapter == null) {
-                    courseAdapter = new CourseAdapter(courses, CourseActivity.this);
+                    courseAdapter = new CourseAdapter(temp, CourseActivity.this);
                     courseRV.setAdapter(courseAdapter);
                 } else {courseAdapter.notifyDataSetChanged();}
             }

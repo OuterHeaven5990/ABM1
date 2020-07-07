@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.abm1.CourseActivity;
 import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
@@ -46,6 +47,7 @@ public class CourseViewModel extends AndroidViewModel {
             }
         });
     }
+
 
     public void saveCourse(String courseTitle, Date startdate, Date enddate, String status, int TermId) {
         CourseEntity entity = liveCourseEntity.getValue();
