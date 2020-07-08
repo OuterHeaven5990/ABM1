@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,13 +17,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.abm1.ViewModels.TermEditorViewModel;
 import com.example.abm1.ViewModels.TermViewModel;
+import com.example.abm1.database.AppDatabase;
 import com.example.abm1.database.AppRepo;
 import com.example.abm1.database.TermDAO;
+import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ViewTermActivity extends AppCompatActivity {
 
@@ -30,8 +34,7 @@ public class ViewTermActivity extends AppCompatActivity {
 
     private TermEditorViewModel termViewModel;
     private TextView termTitleText,termStartDateText,termEndDateText;
-    private AppRepo repository;
-
+    private AppDatabase myDb = AppDatabase.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,8 @@ public class ViewTermActivity extends AppCompatActivity {
                     termTitleText.setText(termEntity.getTermTitle());
                     termStartDateText.setText(startdate);
                     termEndDateText.setText(enddate);
-
                     setTitle(termEntity.getTermTitle() + " Term View");
+
                 }
             }
         });
@@ -98,8 +101,20 @@ public class ViewTermActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_delete_term) {
-            termViewModel.deleteTerm();
-            finish();
+            Bundle extras = getIntent().getExtras();
+            int termId = extras.getInt("Term_ID");
+            System.out.println(termId);
+            boolean hasTerms = false;
+            if(myDb.courseDAO().getCoursesByTermId(termId) > 0) {hasTerms=true;}
+
+            if(hasTerms == false){
+                termViewModel.deleteTerm();
+                finish();
+            }
+            else {
+                Toast.makeText(getApplicationContext(),"Cannot delete Term with course assigned",Toast.LENGTH_LONG).show();
+            }
+
         }
         return  true;
     }
