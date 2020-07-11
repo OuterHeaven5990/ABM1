@@ -39,6 +39,9 @@
             android:name=".EditCourseActivity"
             />
 
+        <activity android:name=".ViewCourseActivity"
+            />
+
     </application>
 
 </manifest>

@@ -157,14 +157,15 @@ public class EditCourseActivity extends AppCompatActivity {
         });
 
         Bundle extras = getIntent().getExtras();
-        if (extras == null) {
+        int cId = extras.getInt("Course_ID");
+        if (cId  < 1) {
             setTitle("New Course");
             newCourse = true;
         }
 
         else {
             setTitle("Edit Course");
-            int courseId = extras.getInt("C_ID");
+            int courseId = extras.getInt("Course_ID");
             viewModel.getData(courseId);
         }
     }
@@ -178,7 +179,7 @@ public class EditCourseActivity extends AppCompatActivity {
         String courseStatus = status.getSelectedItem().toString();
         startdate = format.parse(startDate);
         enddate = format.parse(endDate);
-        viewModel.saveCourse(courseText.getText().toString(),startdate,enddate,courseStatus,TermId);
+        viewModel.saveCourse(courseText.getText().toString(),enddate,startdate,courseStatus,TermId);
         finish();
     }
 

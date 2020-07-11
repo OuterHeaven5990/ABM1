@@ -93,6 +93,7 @@ public class ViewTermActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
             getMenuInflater().inflate(R.menu.edit_menu, menu);
+
         return true;
     }
 
@@ -100,7 +101,7 @@ public class ViewTermActivity extends AppCompatActivity {
     //Options selected logic///////////////////////////////////////////////////////////////////////////
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_delete_term) {
+        if (item.getItemId() == R.id.action_delete) {
             Bundle extras = getIntent().getExtras();
             int termId = extras.getInt("Term_ID");
             System.out.println(termId);

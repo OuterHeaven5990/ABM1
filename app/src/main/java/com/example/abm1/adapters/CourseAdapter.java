@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.abm1.EditCourseActivity;
 import com.example.abm1.EditTermActivity;
 import com.example.abm1.R;
-import com.example.abm1.ViewTermActivity;
+import com.example.abm1.ViewCourseActivity;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,7 +54,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, EditCourseActivity.class);
-                intent.putExtra("Course_Id", course_id);
+                intent.putExtra("Course_ID", course_id);
                 mContext.startActivity(intent);
             }
         });
@@ -62,8 +62,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.courseTextView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, ViewTermActivity.class);
-                intent.putExtra("Course_Id", course_id );
+                Intent intent = new Intent(mContext, ViewCourseActivity.class);
+                intent.putExtra("Course_ID", course_id );
                 mContext.startActivity(intent);
             }
         });
