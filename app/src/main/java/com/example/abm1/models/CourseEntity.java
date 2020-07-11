@@ -23,37 +23,48 @@ public class CourseEntity {
     private Date  endDate;
     private Date startDate;
     private String status;
+    private String mentorName;
+    private String mentorPhoneNumber;
+    private String mentorEmailAddress;
     private int termId;
 
 
 
-    public CourseEntity(int id, String courseTitle, Date endDate, Date startDate, String status, int termId) {
+    public CourseEntity(int id, String courseTitle, Date endDate, Date startDate, String status, String mentorName, String mentorPhoneNumber, String mentorEmailAddress, int termId) {
         this.id = id;
         this.courseTitle = courseTitle;
         this.endDate = endDate;
         this.startDate = startDate;
         this.status = status;
-        this.termId = termId;
-    }
-
-
-
-
-    @Ignore
-    public CourseEntity(String courseTitle, Date endDate, Date startDate, String status, int termId) {
-        this.courseTitle = courseTitle;
-        this.endDate = endDate;
-        this.startDate = startDate;
-        this.status = status;
+        this.mentorName = mentorName;
+        this.mentorPhoneNumber = mentorPhoneNumber;
+        this.mentorEmailAddress = mentorEmailAddress;
         this.termId = termId;
     }
 
     @Ignore
-   public  CourseEntity(String courseTitle, Date endDate, Date startDate, String status) {
+    public CourseEntity(String courseTitle, Date endDate, Date startDate, String status, String mentorName, String mentorPhoneNumber, String mentorEmailAddress, int termId) {
+        this.id = id;
         this.courseTitle = courseTitle;
         this.endDate = endDate;
         this.startDate = startDate;
         this.status = status;
+        this.mentorName = mentorName;
+        this.mentorPhoneNumber = mentorPhoneNumber;
+        this.mentorEmailAddress = mentorEmailAddress;
+        this.termId = termId;
+    }
+
+
+    @Ignore
+   public  CourseEntity(String courseTitle, Date endDate, Date startDate, String status, String mentorName, String mentorPhoneNumber, String mentorEmailAddress) {
+        this.courseTitle = courseTitle;
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.status = status;
+        this.mentorName = mentorName;
+        this.mentorPhoneNumber = mentorPhoneNumber;
+        this.mentorEmailAddress = mentorEmailAddress;
     }
 
     public int getId() {
@@ -94,6 +105,30 @@ public class CourseEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMentorName() {
+        return mentorName;
+    }
+
+    public void setMentorName(String mentorName) {
+        this.mentorName = mentorName;
+    }
+
+    public String getMentorPhoneNumber() {
+        return mentorPhoneNumber;
+    }
+
+    public void setMentorPhoneNumber(String phoneNumber) {
+        this.mentorPhoneNumber = phoneNumber;
+    }
+
+    public String getMentorEmailAddress() {
+        return mentorEmailAddress;
+    }
+
+    public void setMentorEmailAddress(String email) {
+        this.mentorEmailAddress = email;
     }
 
     public int getTermId() {

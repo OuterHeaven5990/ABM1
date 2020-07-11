@@ -35,7 +35,7 @@ public class EditCourseActivity extends AppCompatActivity {
 
     ///Private variables needed to activity////////////////////////////////////////////////////////
     private CourseViewModel viewModel;
-    private TextView courseText;
+    private TextView courseText, mentorname,mentorphone,mentoremail;
     private Button startDateButton,endDateButton,saveButton;
     private String startDate = "", endDate = "", courseStatus ="";
     private boolean newCourse;
@@ -53,6 +53,9 @@ public class EditCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_course);
 
         courseText = (TextView) findViewById(R.id.courseTitleText);
+        mentorname = (TextView) findViewById(R.id.mentorNameText);
+        mentorphone = (TextView) findViewById(R.id.mentorPhoneNumberText);
+        mentoremail = (TextView) findViewById(R.id.mentorEmailAddText);
         startDateButton = (Button) findViewById(R.id.startDateButton);
         endDateButton = (Button) findViewById(R.id.endDateButton);
         saveButton = (Button) findViewById(R.id.saveButton);
@@ -152,6 +155,9 @@ public class EditCourseActivity extends AppCompatActivity {
                     endDateButton.setText(enddate);
                     startDate = startdate;
                     endDate = enddate;
+                    mentorname.setText(courseEntity.getMentorName());
+                    mentorphone.setText(courseEntity.getMentorPhoneNumber());
+                    mentoremail.setText(courseEntity.getMentorEmailAddress());
 
                     //Set Spinner value/////////////////////////////////////////////////////////////
                     String compareValue = courseEntity.getStatus();
@@ -187,10 +193,13 @@ public class EditCourseActivity extends AppCompatActivity {
     private void onSaveButtonClick() throws ParseException {
         courseStatus = status.getSelectedItem().toString();
 
-        if(courseText.getText().toString().isEmpty() && endDate.equals("") && startDate.equals("") && courseStatus.equals("")) { Toast.makeText(this,"All fields are empty",Toast.LENGTH_LONG).show();}
+        if(courseText.getText().toString().isEmpty() && endDate.equals("") && startDate.equals("") && courseStatus.equals("") && mentorname.getText().toString().isEmpty()&& mentorphone.getText().toString().isEmpty() && mentoremail.getText().toString().isEmpty()) { Toast.makeText(this,"All fields are empty",Toast.LENGTH_LONG).show();}
         else if(courseText.getText().toString().isEmpty()) { Toast.makeText(this,"Title must contain a value",Toast.LENGTH_LONG).show(); }
         else if(startDate.equals("")) { Toast.makeText(this,"Start Date must contain a value",Toast.LENGTH_LONG).show();}
         else if(endDate.equals("")) { Toast.makeText(this,"End Date must contain a value",Toast.LENGTH_LONG).show();}
+        else if(mentorname.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor name must contain a value",Toast.LENGTH_LONG).show();}
+        else if(mentorphone.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor name must contain a value",Toast.LENGTH_LONG).show();}
+        else if(mentoremail.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor name must contain a value",Toast.LENGTH_LONG).show();}
         else if(courseStatus.equals("")) { Toast.makeText(this,"Course Status must contain a value",Toast.LENGTH_LONG).show();}
 
 
@@ -203,11 +212,11 @@ public class EditCourseActivity extends AppCompatActivity {
             enddate = format.parse(endDate);
 
             if(newCourse == false) {
-                viewModel.updateCourse(courseText.getText().toString(),startdate,enddate,courseStatus); finish();
+                viewModel.updateCourse(courseText.getText().toString(),startdate,enddate,courseStatus,mentorname.getText().toString(),mentorphone.getText().toString(),mentoremail.getText().toString()); finish();
             }
 
             else {
-                viewModel.saveCourse(courseText.getText().toString(), enddate, startdate, courseStatus, TermId);
+                viewModel.saveCourse(courseText.getText().toString(), enddate, startdate, courseStatus,mentorname.getText().toString(),mentorphone.getText().toString(),mentoremail.getText().toString(), TermId);
                 finish(); }
             }
 

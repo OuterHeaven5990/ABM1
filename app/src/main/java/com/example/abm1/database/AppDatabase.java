@@ -6,13 +6,11 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 
-@Database(entities = {TermEntity.class, CourseEntity.class}, version = 2)
+@Database(entities = {TermEntity.class, CourseEntity.class}, version = 1)
 
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {

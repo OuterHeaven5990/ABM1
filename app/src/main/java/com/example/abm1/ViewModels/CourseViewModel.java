@@ -49,7 +49,7 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
 
-    public void saveCourse(String courseTitle, Date startdate, Date enddate, String status, int TermId) {
+    public void saveCourse(String courseTitle, Date startdate, Date enddate, String status, String mentorName, String mentorPhone, String mentorEmail, int TermId) {
         CourseEntity entity = liveCourseEntity.getValue();
         if (entity == null) {
 
@@ -57,7 +57,7 @@ public class CourseViewModel extends AndroidViewModel {
                 return;
             }
 
-            entity = new CourseEntity(courseTitle.trim(), startdate,enddate,status,TermId);
+            entity = new CourseEntity(courseTitle.trim(), startdate,enddate,status,mentorName,mentorPhone,mentorEmail,TermId);
         }
 
         else {
@@ -65,12 +65,15 @@ public class CourseViewModel extends AndroidViewModel {
             entity.setStartDate(startdate);
             entity.setEndDate(enddate);
             entity.setStatus(status);
+            entity.setMentorName(mentorName);
+            entity.setMentorPhoneNumber(mentorPhone);
+            entity.setMentorEmailAddress(mentorEmail);
             entity.setTermId(TermId);
         }
         repository.insertCourse(entity);
     }
 
-    public void updateCourse(String courseTitle, Date startdate, Date enddate, String status) {
+    public void updateCourse(String courseTitle, Date startdate, Date enddate, String status, String mentorName,String mentorPhone,String mentorEmail) {
         CourseEntity entity = liveCourseEntity.getValue();
         if (entity == null) {
 
@@ -78,7 +81,7 @@ public class CourseViewModel extends AndroidViewModel {
                 return;
             }
 
-            entity = new CourseEntity(courseTitle.trim(), startdate,enddate,status);
+            entity = new CourseEntity(courseTitle.trim(), startdate,enddate,status,mentorName,mentorPhone,mentorEmail);
         }
 
         else {
@@ -86,6 +89,9 @@ public class CourseViewModel extends AndroidViewModel {
             entity.setStartDate(startdate);
             entity.setEndDate(enddate);
             entity.setStatus(status);
+            entity.setMentorName(mentorName);
+            entity.setMentorPhoneNumber(mentorPhone);
+            entity.setMentorEmailAddress(mentorEmail);
         }
         repository.insertCourse(entity);
     }
