@@ -93,7 +93,8 @@ public class ViewTermActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
             getMenuInflater().inflate(R.menu.edit_menu, menu);
-
+        MenuItem item = menu.findItem(R.id.action_delete);
+        item.setTitle("Delete Term");
         return true;
     }
 
@@ -113,7 +114,7 @@ public class ViewTermActivity extends AppCompatActivity {
                 finish();
             }
             else {
-                Toast.makeText(getApplicationContext(),"Cannot delete Term with course assigned",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Cannot delete Term with course(s) assigned",Toast.LENGTH_LONG).show();
             }
 
         }

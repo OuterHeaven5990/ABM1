@@ -93,6 +93,8 @@ public class ViewCourseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_delete);
+        item.setTitle("Delete Course");
         return true;
     }
 
