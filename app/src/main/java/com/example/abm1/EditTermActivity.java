@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.RequiresApi;
@@ -39,7 +40,7 @@ public class EditTermActivity  extends AppCompatActivity{
     private TermEditorViewModel termViewModel;
     private TextView termTitle;
     private Button startDateButton,endDateButton,saveButton;
-    private String startDate, endDate;
+    private String startDate = "", endDate ="";
     private boolean newTerm;
     GregorianCalendar calendar = new GregorianCalendar();
     int year = calendar.get(Calendar.YEAR);
@@ -162,12 +163,19 @@ public class EditTermActivity  extends AppCompatActivity{
 
 
     private void onSaveButtonClick() throws ParseException {
-        Date enddate;
-        Date startdate;
-        startdate = format.parse(startDate);
-        enddate = format.parse(endDate);
-        termViewModel.saveTerm(termTitle.getText().toString(),startdate,enddate);
-        finish();
+        if(termTitle.getText().toString().isEmpty() && endDate.equals("") && startDate.equals("")) {Toast.makeText(this,"All fields are empty",Toast.LENGTH_LONG).show();}
+        else if(termTitle.getText().toString().isEmpty()) { Toast.makeText(this,"Title must contain a value",Toast.LENGTH_LONG).show(); }
+        else if(startDate.equals("")) { Toast.makeText(this,"Start Date must contain a value",Toast.LENGTH_LONG).show();}
+        else if(endDate.equals("")) { Toast.makeText(this,"End Date must contain a value",Toast.LENGTH_LONG).show();}
+        else {
+            Date enddate;
+            Date startdate;
+            startdate = format.parse(startDate);
+            enddate = format.parse(endDate);
+
+            termViewModel.saveTerm(termTitle.getText().toString(), startdate, enddate);
+            finish();
+        }
     }
 
 

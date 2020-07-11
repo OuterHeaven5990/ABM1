@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +37,7 @@ public class EditCourseActivity extends AppCompatActivity {
     private CourseViewModel viewModel;
     private TextView courseText;
     private Button startDateButton,endDateButton,saveButton;
-    private String startDate, endDate;
+    private String startDate = "", endDate = "", courseStatus ="";
     private boolean newCourse;
     private Spinner status;
     GregorianCalendar calendar = new GregorianCalendar();
@@ -152,6 +153,17 @@ public class EditCourseActivity extends AppCompatActivity {
                     startDate = startdate;
                     endDate = enddate;
 
+                    //Set Spinner value/////////////////////////////////////////////////////////////
+                    String compareValue = courseEntity.getStatus();
+                    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.course_status, android.R.layout.simple_spinner_item);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    status.setAdapter(adapter);
+                    if (compareValue != null) {
+                        int spinnerPosition = adapter.getPosition(compareValue);
+                        status.setSelection(spinnerPosition);
+                        ///////////////////////////////////////////////////////////////////////////
+
+                    }
                 }
             }
         });
@@ -164,6 +176,7 @@ public class EditCourseActivity extends AppCompatActivity {
         }
 
         else {
+            newCourse = false;
             setTitle("Edit Course");
             int courseId = extras.getInt("Course_ID");
             viewModel.getData(courseId);
@@ -172,15 +185,32 @@ public class EditCourseActivity extends AppCompatActivity {
 
 
     private void onSaveButtonClick() throws ParseException {
-        Bundle extras = getIntent().getExtras();
-        int TermId = extras.getInt("Term_ID");
-        Date enddate;
-        Date startdate;
-        String courseStatus = status.getSelectedItem().toString();
-        startdate = format.parse(startDate);
-        enddate = format.parse(endDate);
-        viewModel.saveCourse(courseText.getText().toString(),enddate,startdate,courseStatus,TermId);
-        finish();
+        courseStatus = status.getSelectedItem().toString();
+
+        if(courseText.getText().toString().isEmpty() && endDate.equals("") && startDate.equals("") && courseStatus.equals("")) { Toast.makeText(this,"All fields are empty",Toast.LENGTH_LONG).show();}
+        else if(courseText.getText().toString().isEmpty()) { Toast.makeText(this,"Title must contain a value",Toast.LENGTH_LONG).show(); }
+        else if(startDate.equals("")) { Toast.makeText(this,"Start Date must contain a value",Toast.LENGTH_LONG).show();}
+        else if(endDate.equals("")) { Toast.makeText(this,"End Date must contain a value",Toast.LENGTH_LONG).show();}
+        else if(courseStatus.equals("")) { Toast.makeText(this,"Course Status must contain a value",Toast.LENGTH_LONG).show();}
+
+
+        else{
+            Bundle extras = getIntent().getExtras();
+            int TermId = extras.getInt("Term_ID");
+            Date enddate;
+            Date startdate;
+            startdate = format.parse(startDate);
+            enddate = format.parse(endDate);
+
+            if(newCourse == false) {
+                viewModel.updateCourse(courseText.getText().toString(),startdate,enddate,courseStatus); finish();
+            }
+
+            else {
+                viewModel.saveCourse(courseText.getText().toString(), enddate, startdate, courseStatus, TermId);
+                finish(); }
+            }
+
     }
 
 

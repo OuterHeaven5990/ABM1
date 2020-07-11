@@ -48,6 +48,14 @@ public class CourseEntity {
         this.termId = termId;
     }
 
+    @Ignore
+   public  CourseEntity(String courseTitle, Date endDate, Date startDate, String status) {
+        this.courseTitle = courseTitle;
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

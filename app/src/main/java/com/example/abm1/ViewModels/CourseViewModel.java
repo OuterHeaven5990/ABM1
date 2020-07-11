@@ -70,5 +70,25 @@ public class CourseViewModel extends AndroidViewModel {
         repository.insertCourse(entity);
     }
 
+    public void updateCourse(String courseTitle, Date startdate, Date enddate, String status) {
+        CourseEntity entity = liveCourseEntity.getValue();
+        if (entity == null) {
+
+            if(TextUtils.isEmpty(courseTitle.trim())) {
+                return;
+            }
+
+            entity = new CourseEntity(courseTitle.trim(), startdate,enddate,status);
+        }
+
+        else {
+            entity.setCourseTitle(courseTitle.trim());
+            entity.setStartDate(startdate);
+            entity.setEndDate(enddate);
+            entity.setStatus(status);
+        }
+        repository.insertCourse(entity);
+    }
+
 
 }
