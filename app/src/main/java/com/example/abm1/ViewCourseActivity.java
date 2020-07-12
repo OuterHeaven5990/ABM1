@@ -22,6 +22,7 @@ import com.example.abm1.database.AppDatabase;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +33,7 @@ public class ViewCourseActivity extends AppCompatActivity {
     private CourseViewModel courseViewModel;
     private TextView courseTitleText,courseStartDateText,courseEndDateText,courseStatusText;
     private AppDatabase myDb = AppDatabase.getInstance(this);
+    DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,27 +57,14 @@ public class ViewCourseActivity extends AppCompatActivity {
     private void initViewModel()  {
         courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         courseViewModel.liveCourseEntity.observe(this, new Observer<CourseEntity>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(CourseEntity courseEntity)  {
                 if(courseEntity != null) {
-                    //Date Conversion/////////////////////////////////////////////////////////////////
-                    String sDate = courseEntity.getStartDate().toString();
-                    String eDate = courseEntity.getEndDate().toString();
-                    LocalDate tempStartDate = ZonedDateTime.parse(sDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
-                    LocalDate tempEndDate = ZonedDateTime.parse(eDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
-                    int sday = tempStartDate.getDayOfMonth();
-                    int smonth = tempStartDate.getMonthValue();
-                    int syear = tempStartDate.getYear();
-                    String startdate = smonth + "/" + sday + "/" + syear;
-                    int eday = tempEndDate.getDayOfMonth();
-                    int emonth = tempEndDate.getMonthValue();
-                    int eyear = tempEndDate.getYear();
-                    String enddate = emonth + "/" + eday + "/" + eyear;
+
                     ///////////////////////////////////////////////////////////////////////////////////
                     courseTitleText.setText(courseEntity.getCourseTitle());
-                    courseStartDateText.setText(startdate);
-                    courseEndDateText.setText(enddate);
+                    courseStartDateText.setText(format_short.format(courseEntity.getStartDate()));
+                    courseEndDateText.setText(format_short.format(courseEntity.getEndDate()));
                     courseStatusText.setText(courseEntity.getStatus());
                     setTitle("Course View");
 

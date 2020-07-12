@@ -22,6 +22,7 @@ import com.example.abm1.ViewModels.TermEditorViewModel;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -37,13 +38,15 @@ public class EditCourseActivity extends AppCompatActivity {
     private CourseViewModel viewModel;
     private TextView courseText, mentorname,mentorphone,mentoremail;
     private Button startDateButton,endDateButton,saveButton;
-    private String startDate = "", endDate = "", courseStatus ="";
+    private String courseStatus ="";
+    private Date startDate,endDate;
     private boolean newCourse;
     private Spinner status;
     GregorianCalendar calendar = new GregorianCalendar();
     int year = calendar.get(Calendar.YEAR);
     int month = calendar.get(Calendar.MONTH);
     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+    DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -82,10 +85,13 @@ public class EditCourseActivity extends AppCompatActivity {
                 DatePickerDialog dpd = new DatePickerDialog(EditCourseActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                                month  = month + 1;
-                                startDate = month + "/" + dayOfMonth + "/" + year;
-                                startDateButton.setText(startDate);
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTimeInMillis(0);
+                                cal.set(year, month, day, 0, 0, 0);
+                                startDate = cal.getTime();
+                                String displayDate = format_short.format(startDate);
+                                startDateButton.setText(displayDate);
                             }
                         },year,month,dayOfMonth);
 
@@ -101,10 +107,13 @@ public class EditCourseActivity extends AppCompatActivity {
                 DatePickerDialog dpd = new DatePickerDialog(EditCourseActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                                month = month + 1;
-                                endDate = month + "/" + dayOfMonth + "/" + year;
-                                endDateButton.setText(endDate);
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                Calendar cal = Calendar.getInstance();
+                                cal.setTimeInMillis(0);
+                                cal.set(year, month, day, 0, 0, 0);
+                                endDate = cal.getTime();
+                                String displayDate = format_short.format(endDate);
+                                endDateButton.setText(displayDate);
                             }
                         },year,month,dayOfMonth);
                 dpd.show();
@@ -131,30 +140,17 @@ public class EditCourseActivity extends AppCompatActivity {
     private void initViewModel()  {
         viewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
         viewModel.liveCourseEntity.observe(this, new Observer<CourseEntity>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(CourseEntity courseEntity)  {
                 if(courseEntity != null) {
 
-                    //Date Converter////////////////////////////////////////////////////////////////
-                    String sDate = courseEntity.getStartDate().toString();
-                    String eDate = courseEntity.getEndDate().toString();
-                    LocalDate tempStartDate = ZonedDateTime.parse(sDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
-                    LocalDate tempEndDate = ZonedDateTime.parse(eDate, DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy")).toLocalDate();
-                    int sday = tempStartDate.getDayOfMonth();
-                    int smonth = tempStartDate.getMonthValue();
-                    int syear = tempStartDate.getYear();
-                    String startdate = smonth + "/" + sday + "/" + syear;
-                    int eday = tempEndDate.getDayOfMonth();
-                    int emonth = tempEndDate.getMonthValue();
-                    int eyear = tempEndDate.getYear();
-                    String enddate = emonth + "/" + eday + "/" + eyear;
+
                     ////////////////////////////////////////////////////////////////////////////////////
                     courseText.setText(courseEntity.getCourseTitle());
-                    startDateButton.setText(startdate);
-                    endDateButton.setText(enddate);
-                    startDate = startdate;
-                    endDate = enddate;
+                    startDateButton.setText(format_short.format(courseEntity.getStartDate()));
+                    endDateButton.setText(format_short.format(courseEntity.getEndDate()));
+                    startDate = courseEntity.getStartDate();
+                    endDate = courseEntity.getEndDate();
                     mentorname.setText(courseEntity.getMentorName());
                     mentorphone.setText(courseEntity.getMentorPhoneNumber());
                     mentoremail.setText(courseEntity.getMentorEmailAddress());
@@ -193,30 +189,27 @@ public class EditCourseActivity extends AppCompatActivity {
     private void onSaveButtonClick() throws ParseException {
         courseStatus = status.getSelectedItem().toString();
 
-        if(courseText.getText().toString().isEmpty() && endDate.equals("") && startDate.equals("") && courseStatus.equals("") && mentorname.getText().toString().isEmpty()&& mentorphone.getText().toString().isEmpty() && mentoremail.getText().toString().isEmpty()) { Toast.makeText(this,"All fields are empty",Toast.LENGTH_LONG).show();}
+        if(courseText.getText().toString().isEmpty() && endDate == null && startDate == null && courseStatus.equals("") && mentorname.getText().toString().isEmpty() && mentorphone.getText().toString().isEmpty() && mentoremail.getText().toString().isEmpty()) { Toast.makeText(this,"All fields are empty",Toast.LENGTH_LONG).show();}
         else if(courseText.getText().toString().isEmpty()) { Toast.makeText(this,"Title must contain a value",Toast.LENGTH_LONG).show(); }
-        else if(startDate.equals("")) { Toast.makeText(this,"Start Date must contain a value",Toast.LENGTH_LONG).show();}
-        else if(endDate.equals("")) { Toast.makeText(this,"End Date must contain a value",Toast.LENGTH_LONG).show();}
         else if(mentorname.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor name must contain a value",Toast.LENGTH_LONG).show();}
-        else if(mentorphone.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor name must contain a value",Toast.LENGTH_LONG).show();}
-        else if(mentoremail.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor name must contain a value",Toast.LENGTH_LONG).show();}
+        else if(mentorphone.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor phone must contain a value",Toast.LENGTH_LONG).show();}
+        else if(mentoremail.getText().toString().isEmpty()) { Toast.makeText(this,"Mentor email must contain a value",Toast.LENGTH_LONG).show();}
+        else if(startDate == null) { Toast.makeText(this,"Start Date must contain a value",Toast.LENGTH_LONG).show();}
+        else if(endDate == null) { Toast.makeText(this,"End Date must contain a value",Toast.LENGTH_LONG).show();}
         else if(courseStatus.equals("")) { Toast.makeText(this,"Course Status must contain a value",Toast.LENGTH_LONG).show();}
 
 
         else{
             Bundle extras = getIntent().getExtras();
             int TermId = extras.getInt("Term_ID");
-            Date enddate;
-            Date startdate;
-            startdate = format.parse(startDate);
-            enddate = format.parse(endDate);
+
 
             if(newCourse == false) {
-                viewModel.updateCourse(courseText.getText().toString(),startdate,enddate,courseStatus,mentorname.getText().toString(),mentorphone.getText().toString(),mentoremail.getText().toString()); finish();
+                viewModel.updateCourse(courseText.getText().toString(),startDate,endDate,courseStatus,mentorname.getText().toString(),mentorphone.getText().toString(),mentoremail.getText().toString()); finish();
             }
 
             else {
-                viewModel.saveCourse(courseText.getText().toString(), enddate, startdate, courseStatus,mentorname.getText().toString(),mentorphone.getText().toString(),mentoremail.getText().toString(), TermId);
+                viewModel.saveCourse(courseText.getText().toString(), endDate, startDate, courseStatus,mentorname.getText().toString(),mentorphone.getText().toString(),mentoremail.getText().toString(), TermId);
                 finish(); }
             }
 
