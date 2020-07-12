@@ -72,8 +72,15 @@ public class ViewTermActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
             getMenuInflater().inflate(R.menu.edit_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_delete);
-        item.setTitle("Delete Term");
+
+        MenuItem item_Delete = menu.findItem(R.id.action_delete);
+        MenuItem item_start_course = menu.findItem(R.id.action_start_course);
+        MenuItem item_mark_complete = menu.findItem(R.id.action_mark_completed);
+        MenuItem item_drop_course = menu.findItem(R.id.action_drop_course);
+        item_Delete.setTitle("Delete Term");
+        item_drop_course.setVisible(false);
+        item_mark_complete.setVisible(false);
+        item_start_course.setVisible(false);
         return true;
     }
 

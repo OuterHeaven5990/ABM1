@@ -36,6 +36,7 @@ public class CourseViewModel extends AndroidViewModel {
         repository.deleteCourse(liveCourseEntity.getValue());
     }
 
+
     public void getData(final int courseId) {
         executor.execute(new Runnable() {
             @Override
@@ -93,6 +94,21 @@ public class CourseViewModel extends AndroidViewModel {
         }
         repository.insertCourse(entity);
     }
+
+    public void updateCourse(String status) {
+        CourseEntity entity = liveCourseEntity.getValue();
+
+            entity.setCourseTitle(entity.getCourseTitle().trim());
+            entity.setStartDate(entity.getStartDate());
+            entity.setEndDate(entity.getEndDate());
+            entity.setStatus(status);
+            entity.setMentorName(entity.getMentorName());
+            entity.setMentorPhoneNumber(entity.getMentorPhoneNumber());
+            entity.setMentorEmailAddress(entity.getMentorEmailAddress());
+
+        repository.insertCourse(entity);
+    }
+
 
 
 }

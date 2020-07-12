@@ -65,6 +65,11 @@ public class CourseEntity {
         this.mentorEmailAddress = mentorEmailAddress;
     }
 
+    @Ignore
+    public  CourseEntity(String status){
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

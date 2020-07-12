@@ -25,6 +25,8 @@ public class ViewCourseActivity extends AppCompatActivity {
     private TextView courseTitleText,courseStartDateText,courseEndDateText,courseStatusText;
     private AppDatabase myDb = AppDatabase.getInstance(this);
     DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
+    private  CourseEntity menuItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class ViewCourseActivity extends AppCompatActivity {
                     courseStatusText.setText(courseEntity.getStatus());
                     setTitle("Course View");
 
+                    menuItem = courseEntity;
                 }
             }
         });
@@ -67,14 +70,28 @@ public class ViewCourseActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         int courseId = extras.getInt("Course_ID");
         courseViewModel.getData(courseId);
+
     }
+
 
     //Load Menu into activity//////////////////////////////////////////////////////////////////////////
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_delete);
-        item.setTitle("Delete Course");
+        MenuItem item_Delete = menu.findItem(R.id.action_delete);
+        MenuItem item_start_course = menu.findItem(R.id.action_start_course);
+        MenuItem item_mark_complete = menu.findItem(R.id.action_mark_completed);
+        MenuItem item_drop_course = menu.findItem(R.id.action_drop_course);
+        item_Delete.setTitle("Delete Course");
+        item_drop_course.setVisible(false);
+        item_mark_complete.setVisible(false);
+        item_start_course.setVisible(false);
+
+
+       if(menuItem.getStatus().equals("Plan to Take")) {item_start_course.setVisible(true); item_drop_course.setVisible(true);}
+       if(menuItem.getStatus().equals("In Progress") || menuItem.getStatus().equals("Plan to Take")) {item_drop_course.setVisible(true); item_mark_complete.setVisible(true);}
+
+
         return true;
     }
 
@@ -82,11 +99,16 @@ public class ViewCourseActivity extends AppCompatActivity {
     //Options selected logic///////////////////////////////////////////////////////////////////////////
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_delete) {
-                courseViewModel.deleteCourse();
-                finish();
+
+        switch (item.getItemId()){
+            case R.id.action_delete: courseViewModel.deleteCourse(); finish(); return true;
+            case R.id.action_start_course: courseViewModel.updateCourse("In Progress"); this.recreate(); return true;
+            case R.id.action_drop_course: courseViewModel.updateCourse("Dropped"); this.recreate(); return true;
+            case R.id.action_mark_completed: courseViewModel.updateCourse("Completed"); this.recreate(); return true;
+
+            default:super.onOptionsItemSelected(item);
         }
-        return  true;
+        return true;
     }
 
 

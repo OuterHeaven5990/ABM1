@@ -7,4 +7,28 @@
         android:orderInCategory="100"
         android:title="Delete"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_start_course"
+        android:orderInCategory="100"
+        android:title="Start Course"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_drop_course"
+        android:orderInCategory="100"
+        android:title="Drop Course"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_mark_completed"
+        android:orderInCategory="100"
+        android:title="Mark Completed"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_enable_notifications"
+        android:orderInCategory="100"
+        android:title="Enable Notifications"
+        app:showAsAction="never" />
 </menu>
