@@ -5,8 +5,6 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.abm1.CourseActivity;
-
 import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;

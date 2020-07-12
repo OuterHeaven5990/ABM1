@@ -1,7 +1,6 @@
 package com.example.abm1.database;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,9 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.abm1.models.CourseEntity;
-import com.example.abm1.models.TermEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

@@ -3,26 +3,19 @@ package com.example.abm1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.ViewModels.CourseViewModel;
-import com.example.abm1.ViewModels.TermViewModel;
 import com.example.abm1.adapters.CourseAdapter;
-import com.example.abm1.adapters.TermAdapter;
-import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.CourseEntity;
-import com.example.abm1.models.TermEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {

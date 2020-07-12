@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.EditTermActivity;
@@ -17,8 +16,6 @@ import com.example.abm1.models.TermEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 

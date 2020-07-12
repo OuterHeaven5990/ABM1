@@ -8,10 +8,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.abm1.CourseActivity;
 import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.CourseEntity;
-import com.example.abm1.models.TermEntity;
 
 import java.util.Date;
 import java.util.List;

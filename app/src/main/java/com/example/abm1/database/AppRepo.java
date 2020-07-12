@@ -8,9 +8,7 @@ import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 import com.example.abm1.utilities.SampleData;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 

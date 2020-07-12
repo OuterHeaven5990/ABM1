@@ -7,19 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.ViewModels.TermViewModel;
 import com.example.abm1.adapters.TermAdapter;
-import com.example.abm1.database.AppDatabase;
-import com.example.abm1.database.TermDAO;
 import com.example.abm1.models.TermEntity;
-import com.example.abm1.utilities.SampleData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

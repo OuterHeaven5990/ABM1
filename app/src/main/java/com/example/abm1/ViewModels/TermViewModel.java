@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.TermEntity;
-import com.example.abm1.utilities.SampleData;
 
 import java.util.List;
 import java.util.concurrent.Executor;
