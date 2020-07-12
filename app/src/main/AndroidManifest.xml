@@ -41,6 +41,9 @@
 
         <activity android:name=".ViewCourseActivity"
             />
+        <activity android:name=".AssessmentActivity"
+            />
+
 
     </application>
 

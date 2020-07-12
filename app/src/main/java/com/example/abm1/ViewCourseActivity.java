@@ -114,9 +114,9 @@ public class ViewCourseActivity extends AppCompatActivity {
 
     public void startAssessmentActivity() {
         Bundle extras = getIntent().getExtras();
-        int termId = extras.getInt("Term_ID");
-        Intent intent = new Intent(this, CourseActivity.class);
-        intent.putExtra("Term_ID", termId );
+        int courseId = extras.getInt("Course_ID");
+        Intent intent = new Intent(this, AssessmentActivity.class);
+        intent.putExtra("Course_ID", courseId );
         startActivity(intent);
     }
 }
