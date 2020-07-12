@@ -40,7 +40,6 @@ public class EditCourseActivity extends AppCompatActivity {
     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
     DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
     protected void onCreate(Bundle SavedInstanceState) {

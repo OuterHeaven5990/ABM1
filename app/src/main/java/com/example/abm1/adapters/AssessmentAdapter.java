@@ -7,80 +7,78 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.EditAssessmentActivity;
 import com.example.abm1.EditCourseActivity;
 import com.example.abm1.R;
 import com.example.abm1.ViewCourseActivity;
+import com.example.abm1.models.AssessmentEntity;
 import com.example.abm1.models.CourseEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+
 import java.util.ArrayList;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder>{
+public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.ViewHolder>{
 
-    private ArrayList<CourseEntity> mCourses;
+    private ArrayList<AssessmentEntity> mAssessments;
     private int position;
     private final Context mContext;
 
-    public CourseAdapter(ArrayList<CourseEntity> course, Context context) {
-        mCourses = course;
+    public AssessmentAdapter(ArrayList<AssessmentEntity> assessment, Context context) {
+        mAssessments = assessment;
         this.mContext = context;
     }
 
 
     @Override
-    public CourseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.course_list_item, parent, false);
-        CourseAdapter.ViewHolder viewholder = new CourseAdapter.ViewHolder(view);
+    public AssessmentAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.assessment_list_item, parent, false);
+        AssessmentAdapter.ViewHolder viewholder = new AssessmentAdapter.ViewHolder(view);
         return viewholder;
     }
 
-
     @Override
-    public void onBindViewHolder(CourseAdapter.ViewHolder holder, final int position) {
-        final String course_text = mCourses.get(position).getCourseTitle();
-        final Integer course_id = mCourses.get(position).getId();
-        holder.courseTextView.setText(course_text);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final String assessment_text = mAssessments.get(position).getAssessmentTitle();
+        final Integer assessment_id = mAssessments.get(position).getId();
+        holder.assessmentTextView.setText(assessment_text);
 
 
 
         holder.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, EditCourseActivity.class);
-                intent.putExtra("Course_ID", course_id);
+                Intent intent = new Intent(mContext, EditAssessmentActivity.class);
+                intent.putExtra("Assessment_ID", assessment_id);
                 mContext.startActivity(intent);
             }
         });
 
-        holder.courseTextView.setOnClickListener(new View.OnClickListener(){
+        holder.assessmentTextView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ViewCourseActivity.class);
-                intent.putExtra("Course_ID", course_id );
+                intent.putExtra("Assessment_ID", assessment_id );
                 mContext.startActivity(intent);
             }
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return mCourses.size();
+        return mAssessments.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView courseTextView;
+        public TextView assessmentTextView;
         private FloatingActionButton fab;
         public ViewHolder(View view) {
             super(view);
-            courseTextView = (TextView) view.findViewById(R.id.course_text);
+            assessmentTextView = (TextView) view.findViewById(R.id.assessment_text);
             fab = (FloatingActionButton) view.findViewById(R.id.fab);
         }
     }
-
-
 }

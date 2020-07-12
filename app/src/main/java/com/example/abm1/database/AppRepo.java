@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.abm1.models.AssessmentEntity;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 import com.example.abm1.utilities.SampleData;
@@ -17,6 +18,7 @@ public class AppRepo {
     private static  AppRepo instance;
     public LiveData<List<TermEntity>> repoTerms;
     public LiveData<List<CourseEntity>> repoCourses;
+    public LiveData<List<AssessmentEntity>> repoAssessments;
     private AppDatabase myDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -31,6 +33,7 @@ public class AppRepo {
         myDb = AppDatabase.getInstance(context);
         repoTerms = getAllTerms();
         repoCourses = getAllCourses();
+        repoAssessments = getAllAssessments();
     }
 
     //Term Functions////////////////////////////////////////////////////////////////////////////////
@@ -78,15 +81,6 @@ public class AppRepo {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //Course Functions///////////////////////////////////////////////////////////////////////////////
 
-    public void deleteAllCourses() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                myDb.courseDAO().deleteAllCourses();
-            }
-        });
-    }
-
     public CourseEntity getCourseById(int courseId) {
         return myDb.courseDAO().getCourseById(courseId);
     }
@@ -113,5 +107,34 @@ public class AppRepo {
         });
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    //Assessment Functions////////////////////////////////////////////////////////////////////////////
+    public void insertAssessment(final AssessmentEntity assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.assessmentDAO().insertAssessment(assessment);
+            }
+        });
+    }
+
+    public void deleteAssessment(final AssessmentEntity assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.assessmentDAO().deleteAssessment(assessment);
+            }
+        });
+    }
+
+    public AssessmentEntity getAssessmentById(int assessmentId) {
+        return myDb.assessmentDAO().getAssessmentById(assessmentId);
+    }
+
+    private LiveData<List<AssessmentEntity>> getAllAssessments() {
+        return myDb.assessmentDAO().getAllAssessments();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

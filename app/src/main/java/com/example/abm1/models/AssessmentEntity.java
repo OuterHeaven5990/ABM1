@@ -2,6 +2,7 @@ package com.example.abm1.models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -26,6 +27,14 @@ public class AssessmentEntity {
         this.assessmentType = assessmentType;
         this.dueDate = dueDate;
         this.courseId = courseId;
+    }
+
+
+    @Ignore
+    public AssessmentEntity(String assessmentTitle, String assessmentType, Date dueDate) {
+        this.assessmentTitle = assessmentTitle;
+        this.assessmentType = assessmentType;
+        this.dueDate = dueDate;
     }
 
     public int getId() {

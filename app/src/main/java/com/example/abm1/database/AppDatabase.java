@@ -7,10 +7,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.example.abm1.models.AssessmentEntity;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.TermEntity;
 
-@Database(entities = {TermEntity.class, CourseEntity.class}, version = 1)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, version = 2)
 
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
@@ -21,6 +22,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract  TermDAO termDAO();
     public abstract CourseDAO courseDAO();
+    public abstract AssessmentDAO assessmentDAO();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {

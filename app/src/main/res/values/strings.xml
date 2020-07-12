@@ -9,4 +9,9 @@
         <item>Plan to Take</item>
     </string-array>
 
+    <string-array name="assessment_type">
+        <item>Performance</item>
+        <item>Objective</item>
+    </string-array>
+
 </resources>

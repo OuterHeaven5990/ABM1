@@ -43,6 +43,8 @@
             />
         <activity android:name=".AssessmentActivity"
             />
+        <activity android:name=".EditAssessmentActivity"
+            />
 
 
     </application>
