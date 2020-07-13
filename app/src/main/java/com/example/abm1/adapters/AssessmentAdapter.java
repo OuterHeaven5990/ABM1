@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.abm1.EditAssessmentActivity;
 import com.example.abm1.EditCourseActivity;
 import com.example.abm1.R;
+import com.example.abm1.ViewAssessmentActivity;
 import com.example.abm1.ViewCourseActivity;
 import com.example.abm1.models.AssessmentEntity;
 import com.example.abm1.models.CourseEntity;
@@ -60,7 +61,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
         holder.assessmentTextView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, ViewCourseActivity.class);
+                Intent intent = new Intent(mContext, ViewAssessmentActivity.class);
                 intent.putExtra("Assessment_ID", assessment_id );
                 mContext.startActivity(intent);
             }
