@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.abm1.models.AssessmentEntity;
 import com.example.abm1.models.CourseEntity;
+import com.example.abm1.models.NoteEntity;
 import com.example.abm1.models.TermEntity;
 import com.example.abm1.utilities.SampleData;
 
@@ -19,6 +20,7 @@ public class AppRepo {
     public LiveData<List<TermEntity>> repoTerms;
     public LiveData<List<CourseEntity>> repoCourses;
     public LiveData<List<AssessmentEntity>> repoAssessments;
+    public LiveData<List<NoteEntity>> repoNotes;
     private AppDatabase myDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -34,6 +36,7 @@ public class AppRepo {
         repoTerms = getAllTerms();
         repoCourses = getAllCourses();
         repoAssessments = getAllAssessments();
+        repoNotes = getAllNotes();
     }
 
     //Term Functions////////////////////////////////////////////////////////////////////////////////
@@ -136,5 +139,31 @@ public class AppRepo {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
+    //Note Functions//////////////////////////////////////////////////////////////////////////////////
+    public void insertNote(final NoteEntity note) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.noteDAO().insertNote(note);
+            }
+        });
+    }
+
+    public void deleteNote(final NoteEntity note) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                myDb.noteDAO().deleteNote(note);
+            }
+        });
+    }
+
+    public NoteEntity getNoteById(int noteId) {
+        return myDb.noteDAO().getNoteById(noteId);
+    }
+
+    private LiveData<List<NoteEntity>> getAllNotes() {
+        return myDb.noteDAO().getAllNotes();
+    }
 
 }

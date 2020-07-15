@@ -48,6 +48,8 @@
 
         <activity android:name=".ViewAssessmentActivity"
             />
+        <activity android:name=".EditNoteActivity"
+            />
 
 
     </application>

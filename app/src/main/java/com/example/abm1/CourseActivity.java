@@ -41,8 +41,6 @@ public class CourseActivity extends AppCompatActivity {
         termLM = new LinearLayoutManager(this);
         courseRV.setLayoutManager(termLM);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {addButtonClick();}
         });

@@ -31,4 +31,11 @@
         android:orderInCategory="100"
         android:title="Enable Notifications"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_add_note"
+        android:orderInCategory="100"
+        android:title="Add Note"
+        app:showAsAction="never" />
+
 </menu>

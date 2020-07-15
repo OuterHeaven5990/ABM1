@@ -11,22 +11,33 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.ViewModels.CourseViewModel;
+import com.example.abm1.ViewModels.noteViewModel;
+import com.example.abm1.adapters.CourseAdapter;
+import com.example.abm1.adapters.NoteAdapter;
 import com.example.abm1.database.AppDatabase;
 import com.example.abm1.models.CourseEntity;
+import com.example.abm1.models.NoteEntity;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewCourseActivity extends AppCompatActivity {
     //Variables needed for activity///////////////////////////////////////////////////////////////
 
     private CourseViewModel courseViewModel;
     private TextView courseTitleText,courseStartDateText,courseEndDateText,courseStatusText;
+    private noteViewModel NoteViewModel;
+    private NoteAdapter noteAdapter;
+    ArrayList<NoteEntity> notes = new ArrayList<>();
     private AppDatabase myDb = AppDatabase.getInstance(this);
     DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
     private  CourseEntity menuItem;
-
+    private RecyclerView noteRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +47,13 @@ public class ViewCourseActivity extends AppCompatActivity {
         courseStartDateText = (TextView) findViewById(R.id.courseStartDateText);
         courseEndDateText = (TextView) findViewById(R.id.courseEndDateText);
         courseStatusText = (TextView) findViewById(R.id.courseStatus);
+        noteRV = (RecyclerView) findViewById(R.id.noteRecyclerView);
+        RecyclerView.LayoutManager noteLM;
+        noteRV.setHasFixedSize(true);
+        noteLM = new LinearLayoutManager(this);
+        noteRV.setLayoutManager(noteLM);
         initViewModel();
+        initNoteModel();
         MenuItem item = (MenuItem) findViewById(R.id.action_delete);
 
         ImageView img = findViewById(R.id.assessmentLogo);
@@ -72,7 +89,28 @@ public class ViewCourseActivity extends AppCompatActivity {
         courseViewModel.getData(courseId);
 
     }
+    private  void initNoteModel() {
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //Live Data for Notes Recycler View///////////////////////////////////////////////////////
+        final Observer<List<NoteEntity>> noteObserver = new Observer<List<NoteEntity>>() {
+            @Override
+            public void onChanged(List<NoteEntity> noteEntities) {
 
+                notes.clear();
+                notes.addAll(noteEntities);
+                if (noteAdapter == null) {
+                    noteAdapter = new NoteAdapter(notes, ViewCourseActivity.this);
+                    noteRV.setAdapter(noteAdapter);
+                } else {noteAdapter.notifyDataSetChanged();}
+            }
+        };
+
+        NoteViewModel = ViewModelProviders.of(ViewCourseActivity.this).get(noteViewModel.class);
+        NoteViewModel.notes.observe(ViewCourseActivity.this,noteObserver);
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+    }
 
     //Load Menu into activity//////////////////////////////////////////////////////////////////////////
     @Override
@@ -105,6 +143,7 @@ public class ViewCourseActivity extends AppCompatActivity {
             case R.id.action_start_course: courseViewModel.updateCourse("In Progress"); this.recreate(); return true;
             case R.id.action_drop_course: courseViewModel.updateCourse("Dropped"); this.recreate(); return true;
             case R.id.action_mark_completed: courseViewModel.updateCourse("Completed"); this.recreate(); return true;
+            case R.id.action_add_note: startNoteActivity(); return true;
 
             default:super.onOptionsItemSelected(item);
         }
@@ -116,6 +155,14 @@ public class ViewCourseActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         int courseId = extras.getInt("Course_ID");
         Intent intent = new Intent(this, AssessmentActivity.class);
+        intent.putExtra("Course_ID", courseId );
+        startActivity(intent);
+    }
+
+    public void startNoteActivity() {
+        Bundle extras = getIntent().getExtras();
+        int courseId = extras.getInt("Course_ID");
+        Intent intent = new Intent(this, EditNoteActivity.class);
         intent.putExtra("Course_ID", courseId );
         startActivity(intent);
     }
