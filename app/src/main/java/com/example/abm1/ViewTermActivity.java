@@ -78,11 +78,13 @@ public class ViewTermActivity extends AppCompatActivity {
         MenuItem item_mark_complete = menu.findItem(R.id.action_mark_completed);
         MenuItem item_drop_course = menu.findItem(R.id.action_drop_course);
         MenuItem item_add_course = menu.findItem(R.id.action_add_note);
+        MenuItem item_edit_note = menu.findItem(R.id.action_edit_note);
         item_Delete.setTitle("Delete Term");
         item_drop_course.setVisible(false);
         item_mark_complete.setVisible(false);
         item_start_course.setVisible(false);
         item_add_course.setVisible(false);
+        item_edit_note.setVisible(false);
         return true;
     }
 
