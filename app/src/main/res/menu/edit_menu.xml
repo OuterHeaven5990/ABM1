@@ -38,4 +38,10 @@
         android:title="Add Note"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_edit_note"
+        android:orderInCategory="100"
+        android:title="Edit Note"
+        app:showAsAction="never" />
+
 </menu>

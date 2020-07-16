@@ -34,6 +34,7 @@ public class ViewCourseActivity extends AppCompatActivity {
     private noteViewModel NoteViewModel;
     private NoteAdapter noteAdapter;
     ArrayList<NoteEntity> notes = new ArrayList<>();
+    ArrayList<NoteEntity> temp = new ArrayList<>();
     private AppDatabase myDb = AppDatabase.getInstance(this);
     DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
     private  CourseEntity menuItem;
@@ -53,14 +54,14 @@ public class ViewCourseActivity extends AppCompatActivity {
         noteLM = new LinearLayoutManager(this);
         noteRV.setLayoutManager(noteLM);
         initViewModel();
-        initNoteModel();
-        MenuItem item = (MenuItem) findViewById(R.id.action_delete);
-
         ImageView img = findViewById(R.id.assessmentLogo);
         img.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {startAssessmentActivity();}
         });
+        Bundle extras = getIntent().getExtras();
+        int courseId = extras.getInt("Course_ID");
+        initNoteModel(courseId);
     }
 
 
@@ -89,7 +90,7 @@ public class ViewCourseActivity extends AppCompatActivity {
         courseViewModel.getData(courseId);
 
     }
-    private  void initNoteModel() {
+    private  void initNoteModel(final int id) {
         ///////////////////////////////////////////////////////////////////////////////////////////
         //Live Data for Notes Recycler View///////////////////////////////////////////////////////
         final Observer<List<NoteEntity>> noteObserver = new Observer<List<NoteEntity>>() {
@@ -97,9 +98,14 @@ public class ViewCourseActivity extends AppCompatActivity {
             public void onChanged(List<NoteEntity> noteEntities) {
 
                 notes.clear();
+                temp.clear();
                 notes.addAll(noteEntities);
+                for(int i = 0; i < notes.size(); ++i) {
+                    if (notes.get(i).getCourseId() == id) {temp.add(notes.get(i));}
+                }
+
                 if (noteAdapter == null) {
-                    noteAdapter = new NoteAdapter(notes, ViewCourseActivity.this);
+                    noteAdapter = new NoteAdapter(temp, ViewCourseActivity.this);
                     noteRV.setAdapter(noteAdapter);
                 } else {noteAdapter.notifyDataSetChanged();}
             }
@@ -120,10 +126,14 @@ public class ViewCourseActivity extends AppCompatActivity {
         MenuItem item_start_course = menu.findItem(R.id.action_start_course);
         MenuItem item_mark_complete = menu.findItem(R.id.action_mark_completed);
         MenuItem item_drop_course = menu.findItem(R.id.action_drop_course);
+        MenuItem item_enable_notifications = menu.findItem(R.id.action_enable_notifications);
+        MenuItem item_edit_note = menu.findItem(R.id.action_edit_note);
         item_Delete.setTitle("Delete Course");
         item_drop_course.setVisible(false);
         item_mark_complete.setVisible(false);
         item_start_course.setVisible(false);
+        item_enable_notifications.setVisible(false);
+        item_edit_note.setVisible(false);
 
 
        if(menuItem.getStatus().equals("Plan to Take")) {item_start_course.setVisible(true); item_drop_course.setVisible(true);}

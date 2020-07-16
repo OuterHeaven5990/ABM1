@@ -34,7 +34,7 @@ public class noteViewModel extends AndroidViewModel {
     }
 
 
-    public void deleteCourse() {
+    public void deleteNote() {
         repository.deleteNote(liveNoteEntity.getValue());
     }
 

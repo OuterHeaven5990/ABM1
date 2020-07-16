@@ -1,5 +1,6 @@
 package com.example.abm1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -67,19 +68,27 @@ public class EditNoteActivity extends AppCompatActivity {
         } else {
             newNote = false;
             setTitle("Edit Note");
-            int courseId = extras.getInt("Course_ID");
-            NoteViewModel.getData(courseId);
+            int noteId = extras.getInt("Note_ID");
+            NoteViewModel.getData(noteId);
         }
     }
 
     private void onSaveButtonClick(){
+        Bundle extras = getIntent().getExtras();
+        int courseId = extras.getInt("Course_ID");
+        int noteId = extras.getInt("Note_ID");
 
-            Bundle extras = getIntent().getExtras();
-            int courseId = extras.getInt("Course_ID");
+        if(noteText.getText().toString().isEmpty()) {Toast.makeText(this,"Note text cannot be empty",Toast.LENGTH_LONG).show();}
 
+        else {
+            Intent intent = new Intent(this, ViewNoteActivity.class);
+            intent.putExtra("Note_ID", noteId);
+            intent.putExtra("Course_ID", courseId );
             NoteViewModel.saveNote(noteText.getText().toString(), courseId);
             finish();
 
+            }
         }
+
 
 }

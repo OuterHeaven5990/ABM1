@@ -93,7 +93,6 @@ public class ViewTermActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_delete) {
             Bundle extras = getIntent().getExtras();
             int termId = extras.getInt("Term_ID");
-            System.out.println(termId);
             boolean hasTerms = false;
             if(myDb.courseDAO().getCoursesByTermId(termId) > 0) {hasTerms=true;}
 
