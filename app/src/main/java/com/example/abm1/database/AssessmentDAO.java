@@ -8,7 +8,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.abm1.models.AssessmentEntity;
-import com.example.abm1.models.CourseEntity;
 
 import java.util.List;
 

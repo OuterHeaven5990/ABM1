@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.ViewModels.AssessmentViewModel;
-import com.example.abm1.ViewModels.CourseViewModel;
 import com.example.abm1.adapters.AssessmentAdapter;
-import com.example.abm1.adapters.CourseAdapter;
 import com.example.abm1.models.AssessmentEntity;
-import com.example.abm1.models.CourseEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

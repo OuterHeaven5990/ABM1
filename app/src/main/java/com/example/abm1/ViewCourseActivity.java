@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.ViewModels.CourseViewModel;
 import com.example.abm1.ViewModels.noteViewModel;
-import com.example.abm1.adapters.CourseAdapter;
 import com.example.abm1.adapters.NoteAdapter;
 import com.example.abm1.database.AppDatabase;
 import com.example.abm1.models.CourseEntity;

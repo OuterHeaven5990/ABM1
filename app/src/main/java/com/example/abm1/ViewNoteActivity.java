@@ -5,20 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.abm1.R;
-import com.example.abm1.ViewModels.TermEditorViewModel;
 import com.example.abm1.ViewModels.noteViewModel;
-import com.example.abm1.database.AppDatabase;
 import com.example.abm1.models.NoteEntity;
-import com.example.abm1.models.TermEntity;
-
-import org.w3c.dom.Text;
 
 public class ViewNoteActivity extends AppCompatActivity {
 

@@ -11,14 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.abm1.EditAssessmentActivity;
-import com.example.abm1.EditCourseActivity;
 import com.example.abm1.R;
 import com.example.abm1.ViewAssessmentActivity;
-import com.example.abm1.ViewCourseActivity;
 import com.example.abm1.models.AssessmentEntity;
-import com.example.abm1.models.CourseEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 
 import java.util.ArrayList;
 

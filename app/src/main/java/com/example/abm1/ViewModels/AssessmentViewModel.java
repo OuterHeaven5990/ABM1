@@ -1,7 +1,6 @@
 package com.example.abm1.ViewModels;
 
 import android.app.Application;
-import android.content.Context;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.abm1.database.AppRepo;
 import com.example.abm1.models.AssessmentEntity;
-import com.example.abm1.models.CourseEntity;
 
 import java.util.Date;
 import java.util.List;

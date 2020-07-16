@@ -15,13 +15,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.abm1.ViewModels.AssessmentViewModel;
-import com.example.abm1.ViewModels.CourseViewModel;
 import com.example.abm1.models.AssessmentEntity;
-import com.example.abm1.models.CourseEntity;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

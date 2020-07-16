@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.abm1.EditCourseActivity;
 import com.example.abm1.R;
-import com.example.abm1.ViewCourseActivity;
 import com.example.abm1.ViewNoteActivity;
 import com.example.abm1.models.NoteEntity;
 
