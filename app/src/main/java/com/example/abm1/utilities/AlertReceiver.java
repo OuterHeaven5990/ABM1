@@ -18,7 +18,7 @@ public class AlertReceiver extends BroadcastReceiver {
         Toast.makeText(context,"New Alert",Toast.LENGTH_LONG).show();
 
         NotificationCompat.Builder alertBuilder = new NotificationCompat.Builder(context, "WGU Notification Channel")
-                .setSmallIcon(R.drawable.ic_baseline_add_alert_24)
+                .setSmallIcon(R.drawable.ic_alert_icon)
                 .setContentTitle(intent.getStringExtra("Alert Title"))
                 .setContentText(intent.getStringExtra("Alert Text"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

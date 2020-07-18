@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SampleData {
     private static final String SAMPLE_TEXT_1 = "Fall 2019";
-    private static final String SAMPLE_TEXT_2 = "Sprint 2020";
+    private static final String SAMPLE_TEXT_2 = "Spring 2020";
     private static final String SAMPLE_TEXT_3 ="Fall 2020";
 
     private static Date getDate(int diff) {
