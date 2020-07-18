@@ -155,6 +155,7 @@ public class ViewCourseActivity extends AppCompatActivity {
             case R.id.action_mark_completed: courseViewModel.updateCourse("Completed"); this.recreate(); return true;
             case R.id.action_add_note: startNoteActivity(); return true;
             case R.id.action_enable_start_notification: setStartAlert(); return true;
+            case R.id.action_enable_end_notification: setEndAlert(); return true;
 
             default:super.onOptionsItemSelected(item);
         }
@@ -185,6 +186,20 @@ public class ViewCourseActivity extends AppCompatActivity {
         intent.putExtra("Alert Title","Course Start Date Reminder");
         intent.putExtra("Alert Text",menuItem.getCourseTitle() + " Started Today");
         intent.setAction(menuItem.getCourseTitle() + " starts today");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0 ,intent,0);
+        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, temp + (1000 * 60 * 60 * 7) , pendingIntent);
+
+
+    }
+
+    public void setEndAlert() {
+        long temp = menuItem.getEndDate().getTime();
+
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("Alert Title","Course End Date Reminder");
+        intent.putExtra("Alert Text",menuItem.getCourseTitle() + " Ends Today");
+        intent.setAction(menuItem.getCourseTitle() + " ends today");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0 ,intent,0);
         AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, temp + (1000 * 60 * 60 * 7) , pendingIntent);
