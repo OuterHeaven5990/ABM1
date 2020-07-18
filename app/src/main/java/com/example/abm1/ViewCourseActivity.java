@@ -35,7 +35,7 @@ public class ViewCourseActivity extends AppCompatActivity {
     //Variables needed for activity///////////////////////////////////////////////////////////////
 
     private CourseViewModel courseViewModel;
-    private TextView courseTitleText,courseStartDateText,courseEndDateText,courseStatusText;
+    private TextView courseTitleText,courseStartDateText,courseEndDateText,courseStatusText, mentorTextView;
     private noteViewModel NoteViewModel;
     private NoteAdapter noteAdapter;
     ArrayList<NoteEntity> notes = new ArrayList<>();
@@ -54,6 +54,7 @@ public class ViewCourseActivity extends AppCompatActivity {
         courseEndDateText = (TextView) findViewById(R.id.courseEndDateText);
         courseStatusText = (TextView) findViewById(R.id.courseStatus);
         noteRV = (RecyclerView) findViewById(R.id.noteRecyclerView);
+        mentorTextView = findViewById(R.id.courseMentorTextView);
         RecyclerView.LayoutManager noteLM;
         noteRV.setHasFixedSize(true);
         noteLM = new LinearLayoutManager(this);
@@ -82,6 +83,7 @@ public class ViewCourseActivity extends AppCompatActivity {
                     courseStartDateText.setText(format_short.format(courseEntity.getStartDate()));
                     courseEndDateText.setText(format_short.format(courseEntity.getEndDate()));
                     courseStatusText.setText(courseEntity.getStatus());
+                    mentorTextView.setText(courseEntity.getMentorName());
                     setTitle("Course View");
                     menuItem = courseEntity;
                 }

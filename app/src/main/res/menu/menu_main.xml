@@ -8,11 +8,5 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_delete_all_terms"
-        android:orderInCategory="100"
-        android:title="Delete All Terms"
-        app:showAsAction="never" />
-
 
 </menu>

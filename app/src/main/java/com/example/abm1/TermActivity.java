@@ -67,7 +67,6 @@ public class TermActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_SampleData) { generateSampleData(); return true; }
-        else if (id == R.id.action_delete_all_terms) {deleteAllTerms(); return  true;}
 
         return super.onOptionsItemSelected(item);
     }
@@ -99,10 +98,6 @@ public class TermActivity extends AppCompatActivity {
         termViewModel.generateSampleData();
     }
 
-    //Clear Terms list/////////////////////////////////////////////////////////////////////////////
-    private void deleteAllTerms() {
-        termViewModel.deleteAllTerms();
-    }
 
     //Add Button Click//////////////////////////////////////////////////////////////////////////
     private void addButtonClick() {

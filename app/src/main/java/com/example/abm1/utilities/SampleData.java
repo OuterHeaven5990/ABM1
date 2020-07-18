@@ -9,9 +9,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SampleData {
-    private static final String SAMPLE_TEXT_1 = "Simple Term Description";
-    private static final String SAMPLE_TEXT_2 = "A text string with a \nline feed";
-    private static final String SAMPLE_TEXT_3 ="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+    private static final String SAMPLE_TEXT_1 = "Fall 2019";
+    private static final String SAMPLE_TEXT_2 = "Sprint 2020";
+    private static final String SAMPLE_TEXT_3 ="Fall 2020";
 
     private static Date getDate(int diff) {
         GregorianCalendar cal = new GregorianCalendar();
