@@ -1,5 +1,9 @@
 package com.example.abm1;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.abm1.ViewModels.AssessmentViewModel;
 import com.example.abm1.database.AppDatabase;
 import com.example.abm1.models.AssessmentEntity;
+import com.example.abm1.utilities.AlertReceiver;
 
 import java.text.DateFormat;
 
@@ -22,6 +27,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
     private AssessmentViewModel assessmentViewModel;
     private TextView assessmentTitleText,assessmentDueDate,assessmentType;
     private AppDatabase myDb = AppDatabase.getInstance(this);
+    private AssessmentEntity tempEntity;
     DateFormat format_short = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     @Override
@@ -46,7 +52,8 @@ public class ViewAssessmentActivity extends AppCompatActivity {
                     assessmentTitleText.setText(assessmentEntity.getAssessmentTitle());
                     assessmentDueDate.setText(format_short.format(assessmentEntity.getDueDate()));
                     assessmentType.setText(assessmentEntity.getAssessmentType());
-                    setTitle("Assessment OverView");
+                    tempEntity = assessmentEntity;
+                    setTitle("Assessment Overview");
                 }
             }
         });
@@ -71,6 +78,7 @@ public class ViewAssessmentActivity extends AppCompatActivity {
         MenuItem item_add_note = menu.findItem(R.id.action_add_note);
         MenuItem item_edit_note = menu.findItem(R.id.action_edit_note);
         item_Delete.setTitle("Delete Assessment");
+        item_end_alert.setTitle("Set Due Date Alert");
         item_drop_course.setVisible(false);
         item_mark_complete.setVisible(false);
         item_start_course.setVisible(false);
@@ -87,10 +95,24 @@ public class ViewAssessmentActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.action_delete: assessmentViewModel.deleteAssessment(); finish(); return true;
-
+            case R.id.action_enable_end_notification: setDueDateAlert(); return true;
             default:super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    public void setDueDateAlert() {
+        long temp = tempEntity.getDueDate().getTime();
+
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("Alert Title","Assessment due date Reminder");
+        intent.putExtra("Alert Text",tempEntity.getAssessmentTitle() + " due today");
+        intent.setAction(tempEntity.getAssessmentTitle() + " due today");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0 ,intent,0);
+        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, temp + (1000 * 60 * 60 * 7) , pendingIntent);
+
+
     }
 
 }
