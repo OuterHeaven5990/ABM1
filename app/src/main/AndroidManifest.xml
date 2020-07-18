@@ -54,6 +54,10 @@
         <activity android:name=".ViewNoteActivity"
             />
 
+        <receiver
+            android:name=".utilities.AlertReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
 
     </application>
 

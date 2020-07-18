@@ -1,7 +1,11 @@
 package com.example.abm1;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +24,11 @@ import com.example.abm1.adapters.NoteAdapter;
 import com.example.abm1.database.AppDatabase;
 import com.example.abm1.models.CourseEntity;
 import com.example.abm1.models.NoteEntity;
+import com.example.abm1.utilities.AlertReceiver;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ViewCourseActivity extends AppCompatActivity {
@@ -77,7 +83,6 @@ public class ViewCourseActivity extends AppCompatActivity {
                     courseEndDateText.setText(format_short.format(courseEntity.getEndDate()));
                     courseStatusText.setText(courseEntity.getStatus());
                     setTitle("Course View");
-
                     menuItem = courseEntity;
                 }
             }
@@ -125,16 +130,12 @@ public class ViewCourseActivity extends AppCompatActivity {
         MenuItem item_start_course = menu.findItem(R.id.action_start_course);
         MenuItem item_mark_complete = menu.findItem(R.id.action_mark_completed);
         MenuItem item_drop_course = menu.findItem(R.id.action_drop_course);
-        MenuItem item_enable_notifications = menu.findItem(R.id.action_enable_notifications);
         MenuItem item_edit_note = menu.findItem(R.id.action_edit_note);
         item_Delete.setTitle("Delete Course");
         item_drop_course.setVisible(false);
         item_mark_complete.setVisible(false);
         item_start_course.setVisible(false);
-        item_enable_notifications.setVisible(false);
         item_edit_note.setVisible(false);
-
-
        if(menuItem.getStatus().equals("Plan to Take")) {item_start_course.setVisible(true); item_drop_course.setVisible(true);}
        if(menuItem.getStatus().equals("In Progress") || menuItem.getStatus().equals("Plan to Take")) {item_drop_course.setVisible(true); item_mark_complete.setVisible(true);}
 
@@ -153,6 +154,7 @@ public class ViewCourseActivity extends AppCompatActivity {
             case R.id.action_drop_course: courseViewModel.updateCourse("Dropped"); this.recreate(); return true;
             case R.id.action_mark_completed: courseViewModel.updateCourse("Completed"); this.recreate(); return true;
             case R.id.action_add_note: startNoteActivity(); return true;
+            case R.id.action_enable_start_notification: setStartAlert(); return true;
 
             default:super.onOptionsItemSelected(item);
         }
@@ -175,4 +177,20 @@ public class ViewCourseActivity extends AppCompatActivity {
         intent.putExtra("Course_ID", courseId );
         startActivity(intent);
     }
+
+    public void setStartAlert() {
+       long temp = menuItem.getStartDate().getTime();
+
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("Alert Title","Course Start Date Reminder");
+        intent.putExtra("Alert Text",menuItem.getCourseTitle() + " Started Today");
+        intent.setAction(menuItem.getCourseTitle() + " starts today");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0 ,intent,0);
+        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, temp + (1000 * 60 * 60 * 7) , pendingIntent);
+
+
+    }
+
+
 }

@@ -27,12 +27,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_enable_notifications"
-        android:orderInCategory="100"
-        android:title="Enable Notifications"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_add_note"
         android:orderInCategory="100"
         android:title="Add Note"
@@ -42,6 +36,18 @@
         android:id="@+id/action_edit_note"
         android:orderInCategory="100"
         android:title="Edit Note"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_enable_start_notification"
+        android:orderInCategory="100"
+        android:title="Set Start Date Alert"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_enable_end_notification"
+        android:orderInCategory="100"
+        android:title="Set End Date Alert"
         app:showAsAction="never" />
 
 </menu>

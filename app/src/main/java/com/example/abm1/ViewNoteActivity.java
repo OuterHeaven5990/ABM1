@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +19,27 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     private noteViewModel NoteViewModel;
     private TextView noteText;
+    private Button shareNote;
+    private String notetext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_note);
         noteText = (TextView) findViewById(R.id.noteTextView);
+        shareNote = (Button) findViewById(R.id.shareNoteButton);
         initViewModel();
+
+        shareNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Course Note");
+                intent.putExtra(Intent.EXTRA_TEXT, notetext);
+                startActivity(Intent.createChooser(intent, "Share Note"));
+            }
+        });
 
     }
 
@@ -36,6 +52,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
                     ///////////////////////////////////////////////////////////////////////////////////
                     noteText.setText(noteEntity.getNoteText());
+                    notetext = noteEntity.getNoteText();
                     setTitle("Note View");
                 }
             }
@@ -57,13 +74,15 @@ public class ViewNoteActivity extends AppCompatActivity {
         MenuItem item_mark_complete = menu.findItem(R.id.action_mark_completed);
         MenuItem item_drop_course = menu.findItem(R.id.action_drop_course);
         MenuItem item_add_note = menu.findItem(R.id.action_add_note);
-        MenuItem item_enable_notifications = menu.findItem(R.id.action_enable_notifications);
+        MenuItem item_start_alert = menu.findItem(R.id.action_enable_start_notification);
+        MenuItem item_end_alert = menu.findItem(R.id.action_enable_end_notification);
         item_Delete.setTitle("Delete Note");
         item_drop_course.setVisible(false);
         item_mark_complete.setVisible(false);
         item_start_course.setVisible(false);
         item_add_note.setVisible(false);
-        item_enable_notifications.setVisible(false);
+        item_start_alert.setVisible(false);
+        item_end_alert.setVisible(false);
         return true;
     }
 
